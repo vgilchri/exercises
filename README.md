@@ -1,5 +1,3 @@
 # exercises
 
-x=2;
-
-x;
+"hi there";
