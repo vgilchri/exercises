@@ -13,13 +13,13 @@ sutherland_alg:=function(E)
   f:=R!Evaluate(ClassicalModularPolynomial(2),[j,x]);
   roots2:=Roots(f);
   roots2_mult:=0;
-  for s in roots2 do
+  for s:=1 to #roots2 do
     roots2_mult+:= roots2[s][2];
   end for;
   if roots2_mult lt 3 then result:=false; 
   else
     roots:=[];
-    for s in roots2 do
+    for s:= 1 to #roots2 do
       if roots2[s][2] eq 1 then roots cat:= [roots2[s]]; end if;
       if roots2[s][2] eq 2 then roots cat:= [roots2[s] , roots2[s]]; end if;
       if roots2[s][2] eq 3 then roots cat:= [roots2[s] , roots2[s], roots2[s]]; end if;
