@@ -12,7 +12,7 @@ iso_step:= function(p,g, ji, jin)
       fn:= f div (x - jin); 
       jin := ji; 
       roots := Roots(fn);
-      if #roots gt 0 then ji:= roots1[1][1]; 
+      if #roots gt 0 then ji:= roots[1][1]; 
       else 
         result := false;
         end if;
