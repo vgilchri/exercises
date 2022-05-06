@@ -14,7 +14,7 @@ sutherland_alg:=function(E)
   roots2:=Roots(f);
   roots2_mult:=0;
   for s in roots2 do
-    roots2_mult+:= roots[s][2];
+    roots2_mult+:= roots2[s][2];
   end for;
   if roots2_mult lt 3 then result:=false; 
   else
