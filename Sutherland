@@ -2,7 +2,7 @@
 // input is an elliptic curve, output true/false is it supersingular? 
 
 // define prime and finite field
-p:= 19;
+p:= 101;
 Fp:= GF(p,1);
 R<x>:=PolynomialRing(Fp);
 
@@ -56,4 +56,11 @@ sutherland_alg:=function(E)
   return result;
 end function;
 
-sutherland_alg(E1);
+testing:= function(E)
+  "Is curve s.s.?";
+  "Sutherland alg says: "; sutherland_alg(E);
+  "Magma says: "; IsSupersingular(E);
+end function;
+
+testing(E1);
+
