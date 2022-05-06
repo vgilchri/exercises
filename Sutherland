@@ -14,7 +14,7 @@ sutherland_alg:=function(E)
   j:= R!jInvariant(E);
   if not j in Fp then result:= false; end if;
   
-  result;
+  "line 17: "; result;
   
   f:=R!Evaluate(ClassicalModularPolynomial(2),[j,x]);
   roots2:=Roots(f);
@@ -24,7 +24,7 @@ sutherland_alg:=function(E)
   end for;
   if roots2_mult lt 3 then result:=false; 
   
-  result;
+  "line 27: "; result;
   
   else
     roots:=[];
@@ -42,7 +42,7 @@ sutherland_alg:=function(E)
       // j1n := j1; 
       // roots1 := Roots(f1n);
       // if #roots1 gt 0 and roots1[1][1] in Fp then j1:= roots1[1][1]; else result := false; end if;
-      result;
+      "line 45: "; result;
       
       roots1:= Roots(f1);
       if #roots1 gt 1 and roots1[1][1] in Fp then 
@@ -50,7 +50,7 @@ sutherland_alg:=function(E)
       else 
         result := false; 
       end if;
-      result;
+      "line 53: "; result;
       
       j1n:=j1;
       
@@ -61,7 +61,7 @@ sutherland_alg:=function(E)
       else 
         result := false; 
       end if;
-      result;
+      "line 64: "; result;
       j2n:=j2;
       
       f3:=R!Evaluate(ClassicalModularPolynomial(2),[j3,x]);
@@ -71,7 +71,7 @@ sutherland_alg:=function(E)
       else 
         result := false; 
       end if;
-      result;
+      "line 74: "; result;
       
       j3n:=j3;
       
