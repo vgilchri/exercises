@@ -2,7 +2,7 @@
 // input is an elliptic curve, output true/false is it supersingular? 
 
 // define prime and finite field
-p:= 101;
+p:= 19;
 Fp:= GF(p,1);
 R<x>:=PolynomialRing(Fp);
 
@@ -14,8 +14,6 @@ sutherland_alg:=function(E)
   j:= R!jInvariant(E);
   if not j in Fp then result:= false; end if;
   
-  "line 17: "; result;
-  
   f:=R!Evaluate(ClassicalModularPolynomial(2),[j,x]);
   roots2:=Roots(f);
   roots2_mult:=0;
@@ -23,9 +21,6 @@ sutherland_alg:=function(E)
     roots2_mult+:= roots2[s][2];
   end for;
   if roots2_mult lt 3 then result:=false; 
-  
-  "line 27: "; result;
-  
   else
     roots:=[];
     for s:= 1 to #roots2 do
@@ -33,8 +28,9 @@ sutherland_alg:=function(E)
       if roots2[s][2] eq 2 then roots cat:= [roots2[s][1] , roots2[s][1]]; end if;
       if roots2[s][2] eq 3 then roots cat:= [roots2[s][1] , roots2[s][1], roots2[s][1]]; end if;
     end for;
+    
     j1:=roots[1]; j2:=roots[2]; j3:=roots[3];
-    j1n:= j; j2n:=j;j3n:=j;
+    j1n:= j; j2n:=j; j3n:=j;
     m:= Floor(Log(2,p))+1;
     for i := 1 to m do
       f1:=R!Evaluate(ClassicalModularPolynomial(2),[j1,x]); 
