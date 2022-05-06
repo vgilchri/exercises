@@ -38,44 +38,22 @@ sutherland_alg:=function(E)
     m:= Floor(Log(2,p))+1;
     for i := 1 to m do
       f1:=R!Evaluate(ClassicalModularPolynomial(2),[j1,x]); 
-      // f1n:= f1 / (x - j1n); 
-      // j1n := j1; 
-      // roots1 := Roots(f1n);
-      // if #roots1 gt 0 and roots1[1][1] in Fp then j1:= roots1[1][1]; else result := false; end if;
-      "line 45: "; result;
+      f1n:= f1 / (x - j1n); 
+      j1n := j1; 
+      roots1 := Roots(R!f1n);
+      if #roots1 gt 0 and roots1[1][1] in Fp then j1:= roots1[1][1]; else result := false; end if;
       
-      roots1:= Roots(f1);
-      if #roots1 gt 1 and roots1[1][1] in Fp then 
-        if roots1[1][1] eq j1n then j1:= roots1[2][1]; else j1:= roots1[1][1]; end if;
-      else 
-        result := false; 
-      end if;
-      "line 53: "; result;
+      f2:=R!Evaluate(ClassicalModularPolynomial(2),[j2,x]); 
+      f2n:= f2 / (x - j2n); 
+      j2n := j2; 
+      roots22 := Roots(R!f2n);
+      if #roots22 gt 0 and roots22[1][1] in Fp then j2:= roots1[1][1]; else result := false; end if;
       
-      j1n:=j1;
-      
-      f2:=R!Evaluate(ClassicalModularPolynomial(2),[j2,x]);
-      f2;
-      roots22:= Roots(f2);
-      roots22;
-      if #roots22 gt 1 and roots22[1][1] in Fp then 
-        if roots22[1][1] eq j2n then j2:= roots22[2][1]; else j2:= roots22[1][1]; end if;
-      else 
-        result := false; 
-      end if;
-      "line 64: "; result;
-      j2n:=j2;
-      
-      f3:=R!Evaluate(ClassicalModularPolynomial(2),[j3,x]);
-      roots3:= Roots(f3);
-      if #roots3 gt 1 and roots3[1][1] in Fp then 
-        if roots3[1][1] eq j1n then j3:= roots3[2][1]; else j3:= roots3[1][1]; end if;
-      else 
-        result := false; 
-      end if;
-      "line 74: "; result;
-      
-      j3n:=j3;
+      f3:=R!Evaluate(ClassicalModularPolynomial(2),[j3,x]); 
+      f3n:= f3 / (x - j3n); 
+      j3n := j3; 
+      roots3 := Roots(R!f3n);
+      if #roots3 gt 0 and roots3[1][1] in Fp then j3:= roots3[1][1]; else result := false; end if;
       
     end for;
   end if;
