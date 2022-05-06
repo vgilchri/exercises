@@ -4,63 +4,62 @@
 E0 := EllipticCurve([0,1]);
 E1 := EllipticCurve([1,0]);
 
+iso_step:= function(g, ji, jin)
+  result:= true;
+  f:=R!Evaluate(g,[ji,x]); 
+      fn:= f div (x - jin); 
+      jin := ji; 
+      roots := Roots(fn);
+      if #roots gt 0 then ji:= roots1[1][1]; 
+      else 
+        result := false;
+        end if;
+  return result, ji, jin;
+end function;
+
 sutherland_alg:=function(E,p)
 
-  Fp:= GF(p,1);
+  Fp:= GF(p,2);
   R<x>:=PolynomialRing(Fp);
 
   result:= true;
   j:= R!jInvariant(E);
   if not j in Fp then result:= false; end if;
-  
-  f:=R!Evaluate(ClassicalModularPolynomial(2),[j,x]);
+  g := ClassicalModularPolynomial(2);
+  f:=R!Evaluate(g,[j,x]);
   roots2:=Roots(f);
   roots2_mult:=0;
-  for s:=1 to #roots2 do
-    roots2_mult+:= roots2[s][2];
+  for s in roots2 do
+    roots2_mult+:= s[2];
   end for;
   if roots2_mult lt 3 then result:=false; 
   else
     roots:=[];
-    for s:= 1 to #roots2 do
-      if roots2[s][2] eq 1 then roots cat:= [roots2[s][1]]; end if;
-      if roots2[s][2] eq 2 then roots cat:= [roots2[s][1] , roots2[s][1]]; end if;
-      if roots2[s][2] eq 3 then roots cat:= [roots2[s][1] , roots2[s][1], roots2[s][1]]; end if;
+    for s in roots2 do
+      if s[2] eq 1 then roots cat:= [s[1]]; end if;
+      if s[2] eq 2 then roots cat:= [s[1] , s[1]]; end if;
+      if s[2] eq 3 then roots cat:= [s[1] , s[1], s[1]]; end if;
     end for;
 
     j1:=roots[1]; j2:=roots[2]; j3:= roots[3];
     j1n:= j; j2n:=j; j3n:=j;
     m:= Floor(Log(2,p))+1;
     for i := 1 to m do
-      f1:=R!Evaluate(ClassicalModularPolynomial(2),[j1,x]); 
-      f1n:= f1 / (x - j1n); 
-      j1n := j1; 
-      roots1 := Roots(R!f1n);
-      if #roots1 gt 0 and roots1[1][1] in Fp then j1:= roots1[1][1]; 
-      else 
-        result := false;
-        break;
-        end if;
+      check1,j1,j1n:= iso_step(g,j1,j1n);
+      check2,j2,j2n:= iso_step(g,j2,j2n);
+      check3,j3,j3n:= iso_step(g,j3,j3n);
       
-      f2:=R!Evaluate(ClassicalModularPolynomial(2),[j2,x]); 
-      f2n:= f2 / (x - j2n); 
-      j2n := j2; 
-      roots22 := Roots(R!f2n);
-      if #roots22 gt 0 and roots22[1][1] in Fp then j2:= roots1[1][1]; 
-      else 
-        result := false;
-        break;
-      end if;
+      if not check1 and check2 and check3 then break; end if;
+    
+      //f1:=R!Evaluate(g,[j1,x]); 
+      //f1n:= f1 div (x - j1n); 
+      //j1n := j1; 
+      //roots1 := Roots(f1n);
+      //if #roots1 gt 0 then j1:= roots1[1][1]; 
+      //else 
+      //  result := false;
+      //  end if;
       
-      f3:=R!Evaluate(ClassicalModularPolynomial(2),[j3,x]); 
-      f3n:= f3 / (x - j3n); 
-      j3n := j3; 
-      roots3 := Roots(R!f3n);
-      if #roots3 gt 0 and roots3[1][1] in Fp then j3:= roots3[1][1]; 
-      else 
-        result := false; 
-        break;
-      end if;
       
     end for;
   end if;
@@ -69,8 +68,9 @@ end function;
 
 testing:= function(E,p)
   " ";
-  Fp:= GF(p,1);
+  Fp:= GF(p,2);
   R<x>:=PolynomialRing(Fp);
+  ChangeRing(E, Fp);
   "Is curve s.s.?";
   "Sutherland alg says: "; sutherland_alg(E,p);
   "Magma says: "; IsSupersingular(E);
