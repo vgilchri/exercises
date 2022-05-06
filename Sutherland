@@ -8,7 +8,7 @@ R<x>:=PolynomialRing(Fp);
 
 sutherland_alg:=function(E)
   result:= true;
-  j:= jInvariant(E);
+  j:= R!jInvariant(E);
   if not j in Fp then result:= false; end if;
   f:=R!Evaluate(ClassicalModularPolynomial(2),[j,x]);
   roots:=Roots(f);
