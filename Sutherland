@@ -39,19 +39,31 @@ sutherland_alg:=function(E)
       f1n;
       j1n := j1; 
       roots1 := Roots(R!f1n);
-      if #roots1 gt 0 and roots1[1][1] in Fp then j1:= roots1[1][1]; else result := false; end if;
+      if #roots1 gt 0 and roots1[1][1] in Fp then j1:= roots1[1][1]; 
+      else 
+        result := false;
+        break;
+        end if;
       
       f2:=R!Evaluate(ClassicalModularPolynomial(2),[j2,x]); 
       f2n:= f2 / (x - j2n); 
       j2n := j2; 
       roots22 := Roots(R!f2n);
-      if #roots22 gt 0 and roots22[1][1] in Fp then j2:= roots1[1][1]; else result := false; end if;
+      if #roots22 gt 0 and roots22[1][1] in Fp then j2:= roots1[1][1]; 
+      else 
+        result := false;
+        break;
+      end if;
       
       f3:=R!Evaluate(ClassicalModularPolynomial(2),[j3,x]); 
       f3n:= f3 / (x - j3n); 
       j3n := j3; 
       roots3 := Roots(R!f3n);
-      if #roots3 gt 0 and roots3[1][1] in Fp then j3:= roots3[1][1]; else result := false; end if;
+      if #roots3 gt 0 and roots3[1][1] in Fp then j3:= roots3[1][1]; 
+      else 
+        result := false; 
+        break;
+      end if;
       
     end for;
   end if;
@@ -65,6 +77,4 @@ testing:= function(E)
   "Magma says: "; IsSupersingular(E);
   return " ";
 end function;
-
-testing(E1);
 
