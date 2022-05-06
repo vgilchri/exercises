@@ -72,7 +72,7 @@ testing:= function(E,p)
   Fp:= GF(p,1);
   R<x>:=PolynomialRing(Fp);
   "Is curve s.s.?";
-  "Sutherland alg says: "; sutherland_alg(E);
+  "Sutherland alg says: "; sutherland_alg(E,p);
   "Magma says: "; IsSupersingular(E);
   return " ";
 end function;
