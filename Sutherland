@@ -36,7 +36,8 @@ sutherland_alg:=function(E)
       // j1n := j1; 
       // roots1 := Roots(f1n);
       // if #roots1 gt 0 and roots1[1][1] in Fp then j1:= roots1[1][1]; else result := false; end if;
-      if #roots1 gt 0 and roots1[1][1] in Fp then 
+      roots1:= Roots(f1);
+      if #roots1 gt 1 and roots1[1][1] in Fp then 
         if roots1[1][1] eq j1n then j1:= roots1[2][1]; else j1:= roots1[1][1]; end if;
       else 
         result := false; 
