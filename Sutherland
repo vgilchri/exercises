@@ -4,6 +4,7 @@
 E0 := EllipticCurve([0,1]);
 E1 := EllipticCurve([1,0]);
 
+// step from one curve to the next without back tracking
 iso_step:= function(p,g, ji, jin)
   Fp:=GF(p,2);
   R<x>:= PolynomialRing(Fp);
@@ -20,7 +21,7 @@ iso_step:= function(p,g, ji, jin)
 end function;
 
 sutherland_alg:=function(E,p)
-
+  // set base field
   Fp:= GF(p,2);
   R<x>:=PolynomialRing(Fp);
 
@@ -29,13 +30,17 @@ sutherland_alg:=function(E,p)
   if not j in Fp then result:= false; end if;
   g := ClassicalModularPolynomial(2);
   f:=R!Evaluate(g,[j,x]);
+  // check if there are three roots, if not, curve ordinary
   roots2:=Roots(f);
   roots2_mult:=0;
   for s in roots2 do
     roots2_mult+:= s[2];
   end for;
-  if roots2_mult lt 3 then result:=false; 
+  if roots2_mult lt 3 then 
+    result:=false; 
+    break;
   else
+    // place roots in list according to multiplicity 
     roots:=[];
     for s in roots2 do
       if s[2] eq 1 then roots cat:= [s[1]]; end if;
@@ -45,6 +50,7 @@ sutherland_alg:=function(E,p)
 
     j1:=roots[1]; j2:=roots[2]; j3:= roots[3];
     j1n:= j; j2n:=j; j3n:=j;
+    // step through three paths in the graph, one starting at each root, w/o back tracking, checking for leaves as you go
     m:= Floor(Log(2,p))+1;
     for i := 1 to m do
       check1,j1,j1n:= iso_step(p,g,j1,j1n);
