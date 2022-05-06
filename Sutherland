@@ -32,20 +32,20 @@ sutherland_alg:=function(E)
     m:= Floor(Log(2,p))+1;
     for i := 1 to m do
       f1:=R!Evaluate(ClassicalModularPolynomial(2),[j1,x]); 
-      f1n:= f / (x - j1n); 
+      f1n:= f1 / (x - j1n); 
       j1n := j1; 
       roots1 := Roots(f1n);
       if #roots1 gt 0 and roots1[1][1] in Fp then j1:= roots1[1][1]; else result := false; end if;
     
       f2:=R!Evaluate(ClassicalModularPolynomial(2),[j2,x]); 
-      f2n:= f / (x - j2n); 
+      f2n:= f2 / (x - j2n); 
       j2n := j2; 
       j2 := Roots(f2n)[1][1];
       roots2 := Roots(f2n);
       if #roots2 gt 0 and roots2[1][1] in Fp then j2:= roots2[1][1]; else result := false; end if;
     
       f3:=R!Evaluate(ClassicalModularPolynomial(2),[j3,x]); 
-      f3n:= f / (x - j3n); 
+      f3n:= f3 / (x - j3n); 
       j3n := j3; 
       j3 := Roots(f3n)[1][1];
       roots3 := Roots(f3n);
@@ -54,3 +54,5 @@ sutherland_alg:=function(E)
   end if;
   return result;
 end function;
+
+sutherland_alg(E1);
