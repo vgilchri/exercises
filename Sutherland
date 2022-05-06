@@ -4,7 +4,9 @@
 E0 := EllipticCurve([0,1]);
 E1 := EllipticCurve([1,0]);
 
-iso_step:= function(g, ji, jin)
+iso_step:= function(p,g, ji, jin)
+  Fp:=GF(p,2);
+  R<x>:= PolynomialRing(Fp);
   result:= true;
   f:=R!Evaluate(g,[ji,x]); 
       fn:= f div (x - jin); 
@@ -45,9 +47,9 @@ sutherland_alg:=function(E,p)
     j1n:= j; j2n:=j; j3n:=j;
     m:= Floor(Log(2,p))+1;
     for i := 1 to m do
-      check1,j1,j1n:= iso_step(g,j1,j1n);
-      check2,j2,j2n:= iso_step(g,j2,j2n);
-      check3,j3,j3n:= iso_step(g,j3,j3n);
+      check1,j1,j1n:= iso_step(p,g,j1,j1n);
+      check2,j2,j2n:= iso_step(p,g,j2,j2n);
+      check3,j3,j3n:= iso_step(p,g,j3,j3n);
       
       if not check1 and check2 and check3 then break; end if;
     
