@@ -52,16 +52,6 @@ sutherland_alg:=function(E,p)
       check3,j3,j3n:= iso_step(p,g,j3,j3n);
       
       if not check1 and check2 and check3 then break; end if;
-    
-      //f1:=R!Evaluate(g,[j1,x]); 
-      //f1n:= f1 div (x - j1n); 
-      //j1n := j1; 
-      //roots1 := Roots(f1n);
-      //if #roots1 gt 0 then j1:= roots1[1][1]; 
-      //else 
-      //  result := false;
-      //  end if;
-      
       
     end for;
   end if;
