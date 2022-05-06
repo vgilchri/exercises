@@ -1,15 +1,14 @@
 "running sutherland exercise";
-// input is an elliptic curve, output true/false is it supersingular? 
-
-// define prime and finite field
-p:= 17;
-Fp:= GF(p,1);
-R<x>:=PolynomialRing(Fp);
+// input is an elliptic curve, output true/false is it supersingular? using A. Sutherland algorithm
 
 E0 := EllipticCurve([0,1]);
 E1 := EllipticCurve([1,0]);
 
-sutherland_alg:=function(E)
+sutherland_alg:=function(E,p)
+
+  Fp:= GF(p,1);
+  R<x>:=PolynomialRing(Fp);
+
   result:= true;
   j:= R!jInvariant(E);
   if not j in Fp then result:= false; end if;
@@ -68,8 +67,10 @@ sutherland_alg:=function(E)
   return result;
 end function;
 
-testing:= function(E)
+testing:= function(E,p)
   " ";
+  Fp:= GF(p,1);
+  R<x>:=PolynomialRing(Fp);
   "Is curve s.s.?";
   "Sutherland alg says: "; sutherland_alg(E);
   "Magma says: "; IsSupersingular(E);
