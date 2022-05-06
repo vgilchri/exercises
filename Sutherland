@@ -55,6 +55,7 @@ sutherland_alg:=function(E)
       j1n:=j1;
       
       f2:=R!Evaluate(ClassicalModularPolynomial(2),[j2,x]);
+      f2;
       roots22:= Roots(f2);
       roots22;
       if #roots22 gt 1 and roots22[1][1] in Fp then 
