@@ -1,7 +1,7 @@
 "running sutherland exercise";
-\\ input is an elliptic curve, output true/false is it supersingular? 
+// input is an elliptic curve, output true/false is it supersingular? 
 
-\\ define prime and finite field
+// define prime and finite field
 p:= 101;
 Fp:= GF(p,1);
 R<x>:=PolynomialRing(Fp);
