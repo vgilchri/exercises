@@ -20,9 +20,9 @@ sutherland_alg:=function(E)
   else
     roots:=[];
     for s in roots2 do
-      if roots2[s][2] eq 1 then roots cat := [roots2[s]]; end if;
-      if roots2[s][2] eq 2 then roots cat := [roots2[s] , roots2[s]]; end if;
-      if roots2[s][2] eq 3 then roots cat := [roots2[s] , roots2[s], roots2[s]]; end if;
+      if roots2[s][2] eq 1 then roots cat:= [roots2[s]]; end if;
+      if roots2[s][2] eq 2 then roots cat:= [roots2[s] , roots2[s]]; end if;
+      if roots2[s][2] eq 3 then roots cat:= [roots2[s] , roots2[s], roots2[s]]; end if;
      end for;
     j1:=roots[1]; j2:=roots[2]; j3:=roots[3];
     j1n:= j; j2n:=j;j3n:=j;
