@@ -12,31 +12,32 @@ sutherland_alg:=function(E)
   if not j in Fp then result:= false; end if;
   f:=R!Evaluate(ClassicalModularPolynomial(2),[j,x]);
   roots:=Roots(f);
-  if #roots lt 3 then result:=false; end if;
-  j1:=roots[1][1]; j2:=roots[2][1]; j3:=roots[3][1];
-  j1n:= j; j2n:=j;j3n:=j;
-  m:= Floor(Log(2,p))+1;
-  for i := 1 to m do
-    f1:=R!Evaluate(ClassicalModularPolynomial(2),[j1,x]); 
-    f1n:= f / (x - j1n); 
-    j1n := j1; 
-    roots1 := Roots(f1n);
-    if #roots1 gt 0 and roots1[1][1] in Fp then j1:= roots1[1][1]; else result := false; end if;
+  if #roots lt 3 then result:=false; 
+  else
+    j1:=roots[1][1]; j2:=roots[2][1]; j3:=roots[3][1];
+    j1n:= j; j2n:=j;j3n:=j;
+    m:= Floor(Log(2,p))+1;
+    for i := 1 to m do
+      f1:=R!Evaluate(ClassicalModularPolynomial(2),[j1,x]); 
+      f1n:= f / (x - j1n); 
+      j1n := j1; 
+      roots1 := Roots(f1n);
+      if #roots1 gt 0 and roots1[1][1] in Fp then j1:= roots1[1][1]; else result := false; end if;
     
-    f2:=R!Evaluate(ClassicalModularPolynomial(2),[j2,x]); 
-    f2n:= f / (x - j2n); 
-    j2n := j2; 
-    j2 := Roots(f2n)[1][1];
-    roots2 := Roots(f2n);
-    if #roots2 gt 0 and roots2[1][1] in Fp then j2:= roots2[1][1]; else result := false; end if;
+      f2:=R!Evaluate(ClassicalModularPolynomial(2),[j2,x]); 
+      f2n:= f / (x - j2n); 
+      j2n := j2; 
+      j2 := Roots(f2n)[1][1];
+      roots2 := Roots(f2n);
+      if #roots2 gt 0 and roots2[1][1] in Fp then j2:= roots2[1][1]; else result := false; end if;
     
-    f3:=R!Evaluate(ClassicalModularPolynomial(2),[j3,x]); 
-    f3n:= f / (x - j3n); 
-    j3n := j3; 
-    j3 := Roots(f3n)[1][1];
-    roots3 := Roots(f3n);
-    if #roots3 gt 0 and roots3[1][1] in Fp then j3:= roots3[1][1]; else result := false; end if;
-  end for;
-  
+      f3:=R!Evaluate(ClassicalModularPolynomial(2),[j3,x]); 
+      f3n:= f / (x - j3n); 
+      j3n := j3; 
+      j3 := Roots(f3n)[1][1];
+      roots3 := Roots(f3n);
+      if #roots3 gt 0 and roots3[1][1] in Fp then j3:= roots3[1][1]; else result := false; end if;
+    end for;
+  end if;
   return result;
 end function;
