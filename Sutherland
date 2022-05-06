@@ -43,20 +43,25 @@ sutherland_alg:=function(E)
         result := false; 
       end if;
       j1n:=j1;
-    
-      f2:=R!Evaluate(ClassicalModularPolynomial(2),[j2,x]); 
-      f2n:= f2 / (x - j2n); 
-      j2n := j2; 
-      j2 := Roots(f2n)[1][1];
-      roots22 := Roots(f2n);
-      if #roots22 gt 0 and roots22[1][1] in Fp then j2:= roots22[1][1]; else result := false; end if;
-    
-      f3:=R!Evaluate(ClassicalModularPolynomial(2),[j3,x]); 
-      f3n:= f3 / (x - j3n); 
-      j3n := j3; 
-      j3 := Roots(f3n)[1][1];
-      roots3 := Roots(f3n);
-      if #roots3 gt 0 and roots3[1][1] in Fp then j3:= roots3[1][1]; else result := false; end if;
+      
+      f2:=R!Evaluate(ClassicalModularPolynomial(2),[j2,x]);
+      roots22:= Roots(f2);
+      if #roots22 gt 1 and roots22[1][1] in Fp then 
+        if roots22[1][1] eq j2n then j2:= roots22[2][1]; else j2:= roots22[1][1]; end if;
+      else 
+        result := false; 
+      end if;
+      j2n:=j2;
+      
+      f3:=R!Evaluate(ClassicalModularPolynomial(2),[j3,x]);
+      roots3:= Roots(f3);
+      if #roots3 gt 1 and roots3[1][1] in Fp then 
+        if roots3[1][1] eq j1n then j3:= roots3[2][1]; else j3:= roots3[1][1]; end if;
+      else 
+        result := false; 
+      end if;
+      j3n:=j3;
+      
     end for;
   end if;
   return result;
