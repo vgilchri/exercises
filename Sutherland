@@ -2,7 +2,7 @@
 // input is an elliptic curve, output true/false is it supersingular? 
 
 // define prime and finite field
-p:= 101;
+p:= 19;
 Fp:= GF(p,1);
 R<x>:=PolynomialRing(Fp);
 
@@ -29,7 +29,7 @@ sutherland_alg:=function(E)
       if roots2[s][2] eq 3 then roots cat:= [roots2[s][1] , roots2[s][1], roots2[s][1]]; end if;
     end for;
     
-    j1:=roots[1]; j2:=roots[2]; j3:=roots[3];
+    j1,j2,j3:=roots;
     j1n:= j; j2n:=j; j3n:=j;
     m:= Floor(Log(2,p))+1;
     for i := 1 to m do
