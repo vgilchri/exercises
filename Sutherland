@@ -6,7 +6,7 @@ E1 := EllipticCurve([1,0]);
 
 // step from one curve to the next without back tracking
 iso_step:= function(p,g, ji, jin)
-  Fp:=GF(p,2);
+  Fp:=Parent(ji);
   R<x>:= PolynomialRing(Fp);
   result:= true;
   f:=R!Evaluate(g,[ji,x]); 
@@ -57,7 +57,7 @@ sutherland_alg:=function(E,p)
       check2,j2,j2n:= iso_step(p,g,j2,j2n);
       check3,j3,j3n:= iso_step(p,g,j3,j3n);
       
-      if not check1 and check2 and check3 then break; end if;
+      if not (check1 and check2 and check3) then break; end if;
       
     end for;
   end if;
@@ -68,10 +68,9 @@ testing:= function(E,p)
   " ";
   Fp:= GF(p,2);
   R<x>:=PolynomialRing(Fp);
-  ChangeRing(E, Fp);
   "Is curve s.s.?";
   "Sutherland alg says: "; sutherland_alg(E,p);
-  "Magma says: "; IsSupersingular(E);
+  "Magma says: "; IsSupersingular(ChangeRing(E, Fp));
   return " ";
 end function;
 
