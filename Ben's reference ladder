@@ -1,0 +1,88 @@
+// A reference Montgomery ladder implementation.
+//
+// Here we use separate xADD and xDBL operations,
+// but I think the formulae inside are the ones
+// you would use to do a merged xDBLADD operation...
+
+xDBL := function(A, xP)
+    X_P, Z_P := Explode(xP);
+    V1 := X_P + Z_P;
+    V1 := V1^2;
+    V2 := X_P - Z_P;
+    V2 := V2^2;
+    X_2P := V1*V2;
+    V1 := V1 - V2;
+    V3 := ((A + 2)/4)*V1;
+    V3 := V3 + V2;
+    Z_2P := V1*V3;
+    return [X_2P, Z_2P];
+end function;
+
+xADD := function(x_P, x_Q, x_minus)
+    X_P, Z_P := Explode(x_P);
+    X_Q, Z_Q := Explode(x_Q);
+    X_minus, Z_minus := Explode(x_minus);
+    T0 := X_P + Z_P;
+    V1 := X_Q - Z_Q;
+    V1 := V1*T0;
+    T0 := X_P - Z_P;
+    V2 := X_Q + Z_Q;
+    V2 := V2*T0;
+    V3 := V1 + V2;
+    V3 := V3^2;
+    V4 := V1 - V2;
+    V4 := V4^2;
+    X_plus := Z_minus*V3;
+    Z_plus := X_minus*V4;
+    return [X_plus, Z_plus];
+end function;
+
+LADDER := function(A, m, x_P)
+    // x_P = [X,Z] is an affine representative of some x(P)
+    bits := Reverse(IntegerToSequence(m,2));
+    R_0 := [Universe(x_P)|1, 0];
+    R_1 := x_P;
+    for b in bits do
+        add := xADD(R_0, R_1, x_P);
+        if b eq 0 then
+            R_0 := xDBL(A, R_0);
+            R_1 := add;
+        else // b eq 1
+            R_0 := add;
+            R_1 := xDBL(A, R_1);
+        end if;
+    end for;
+    return R_0, R_1;
+end function;
+
+DivisionPsiSquaredEval := function(A, m, u)
+    // This should become a function that computes Psi_m(u)^2...
+    R_0, R_1 := LADDER(A, m, [u,1]);
+    // Now R_0 = (X_m,Z_m) is an affine representative of x([m](u,*))
+    // (where * denotes an irrelevant y-coordinate).
+    X_m, Z_m := Explode(R_0);
+    // X_m = Phi_m(u)S(m,u)
+    // Z_m = Psi_m^2(u)S(m,u)
+    // TODO: remove the projective factor S(m,u)...
+    return Z_m;
+end function;
+
+// This function computes what we are actually looking for,
+// but much less efficiently. We can use it as a reference
+// when looking for the correct projective factor in DivisionPsiSquaredEval.
+
+Target := function(A, m, u)
+    E := EllipticCurve([0,A,0,1,0]); // y^2 = x^3 + Ax^2 + x
+    // Magma has DivisionPolynomial(E, m), which is not exactly what we want
+    // when m is even, and DivisionPsi(E, m), which is what we do want.
+    // For example: DivisionPolynomial(E, 2) will give 4*(x^3 + A*x^2 + x),
+    // but DivisionPsi(E, 2) gives 2*y.  Of course DivisionPsi(E,m)^2 will
+    // always end up being a polynomial in x, but Magma will compute it as an
+    // element of the function field of E, and we need to use some obscure
+    // hackery to get it into a useful form...
+    Psi2 := DivisionPsi(E, m)^2;
+    coeffs := Coefficients(Psi2);  // returns [f_0,f_1, ...] s.t. Psi2 = \sum_i f_i(x) y^i
+    assert #coeffs eq 1;
+    f := coeffs[1];
+    return Evaluate(f, u);
+end function;
