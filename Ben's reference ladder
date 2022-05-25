@@ -67,6 +67,14 @@ DivisionPsiSquaredEval := function(A, m, u)
     return Z_m;
 end function;
 
+DivisionPsiSquaredEval2 := function(A, m, u)
+    // same as above, but now we are concerned with the projective factor
+    // of R1, since we are conjecturing S(m,u) will depend on both
+    R_0, R_1 := LADDER(A, m, [u,1]);
+    X_m, Z_m := Explode(R_1);
+    return Z_m;
+end function;
+
 // This function computes what we are actually looking for,
 // but much less efficiently. We can use it as a reference
 // when looking for the correct projective factor in DivisionPsiSquaredEval.
