@@ -1,9 +1,10 @@
 // step 1: find a point G of order l 
-// input: elliptic curve E0 and order l, output: G 
+// input: elliptic curve E0 and order l and #E0 N, output: G 
 // assume inputs are well defined for the context
 
 // regular point finding
-point_finding:= function()
+point_finding:= function(E0, l, N)
+  P:=Random(E0);
   
 end function;
 
