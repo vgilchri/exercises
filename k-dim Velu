@@ -1,5 +1,5 @@
 // step 1: find a point G of order l 
-// input: elliptic curve E0 and order l and #E0 N, output: G 
+// input: elliptic curve E0 in Weirstrass form and order l and #E0 N, output: G 
 // assume inputs are well defined for the context
 
 // regular point finding
