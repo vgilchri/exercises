@@ -1,9 +1,9 @@
 // step 1: find a point G of order l 
-// input: elliptic curve E0 in Weirstrass form and order l and #E0 N, output: G 
+// input: (montgomery coefficient A0 for curve E0) and (order l) and (#E0=N), output: G 
 // assume inputs are well defined for the context
 
 // regular point finding
-point_finding:= function(E0, l, N)
+point_finding:= function(A0, l, N)
   P:=Random(E0);
   
 end function;
@@ -11,8 +11,8 @@ end function;
 // optimized point finding
 
 
-// step 2: compute the Velu formulae to obtain the isogeny iso with kernel generator G, and its codomain E1
-// input: G, l, E0, output: iso, E1
+// step 2: compute the Velu formulae to obtain the isogeny iso with kernel generator G, and its codomain E1 with monty coeff A1
+// input: G, l, A0, output: iso, A1
 
 // regular Velu
 
