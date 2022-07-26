@@ -17,10 +17,10 @@ point_finding:= function(A, p, k, l)
   // Sample a random point
   E := EllipticCurve([0,K!A,0,K!1,0]);
   N := #E ; 
-  P_l := K!0 ;
-  P := K!0;
-  While IsZero(P) then
-    P:=Random(E0);
+  P := Random(E);
+  P_l:= LADDER(A,N/l,P);
+  While IsIdentity(P_l) then
+    P:=Random(E);
     P_l:= LADDER(A,N/l,P);
   end while;
   return P_l;
