@@ -18,9 +18,10 @@ point_finding:= function(A, p, k, l)
   E := EllipticCurve([0,K!A,0,K!1,0]);
   N := #E ; 
   P_l := K!0 ;
+  P := K!0;
   While IsZero(P) then
     P:=Random(E0);
-    P_l = LADDER(A,N/l,P);
+    P_l:= LADDER(A,N/l,P);
   end while;
   return P_l;
 
