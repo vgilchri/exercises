@@ -6,9 +6,6 @@ import "Ben's reference ladder.m": xDBL , xADD , LADDER;
 // assume inputs are well defined for the context
 
 // regular point finding
-point_finding:= function(A0, l, N)
-  P:=Random(E0);
-
 
 point_finding:= function(A, p, k, l)
 // set base field
@@ -20,7 +17,7 @@ point_finding:= function(A, p, k, l)
   // Sample a random point
   E := EllipticCurve([0,K!A,0,K!1,0]);
   N := #E ; 
-  P_l := K!.0 ;
+  P_l := K!0 ;
   While IsZero(P) then
     P:=Random(E0);
     P_l = LADDER(A,N/l,P);
