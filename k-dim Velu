@@ -1,14 +1,33 @@
+import "Ben's reference ladder.m": xDBL , xADD , LADDER;
+
 // step 1: find a point G of order l 
 // input: (montgomery coefficient A0 for curve E0) and (order l) and (#E0=N), output: G 
+// input: (montgomery coefficient A for curve E) and (order l) and (finite field p and k), output: (G a point of order l on E in K) 
 // assume inputs are well defined for the context
 
 // regular point finding
 point_finding:= function(A0, l, N)
   P:=Random(E0);
-  
-end function;
 
-// optimized point finding
+
+point_finding:= function(A, p, k, l)
+// set base field
+// K:= GF(p,k);
+// R<x>:=PolynomialRing(K);
+
+  K := FiniteField(p, k); // finite field of size p^k
+
+  // Sample a random point
+  E := EllipticCurve([0,K!A,0,K!1,0]);
+  N := #E ; 
+  P_l := K!.0 ;
+  While IsZero(P) then
+    P:=Random(E0);
+    P_l = LADDER(A,N/l,P);
+  end while;
+  return P_l;
+
+end function;
 
 
 // step 2: compute the Velu formulae to obtain the isogeny iso with kernel generator G, and its codomain E1 with monty coeff A1
