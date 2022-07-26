@@ -19,7 +19,7 @@ point_finding:= function(A, p, k, l)
   N := #E ; 
   P := Random(E);
   P_l:= LADDER(A,N/l,P);
-  While IsIdentity(P_l) then
+  while IsZero(P_l) do
     P:=Random(E);
     P_l:= LADDER(A,N/l,P);
   end while;
