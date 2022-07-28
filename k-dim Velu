@@ -1,21 +1,24 @@
 import "Ben's reference ladder.m": xDBL , xADD , LADDER;
 
 // step 1: find a point G of order l 
-// input: (montgomery coefficient A for curve E) and (order l) and (finite field p and k), output: (G a point of order l on E in K) 
+// input: (montgomery coefficient A for curve E) and (order l) and (finite field p and k) and (number of points N), output: (G a point of order l on E in K) 
 // assume inputs are well defined for the context
 
 // regular point finding
 
-point_finding:= function(A, p, k, l)
-// set base field
-// K:= GF(p,k);
-// R<x>:=PolynomialRing(K);
+point_finding:= function(A, p, k, l, N)
+//Checks
+  error if (l-1 mod k eq 0) "k ne divise pas l-1";
+  error if (k>13) "k est trop grand";
+
+ // set base field
+ // K:= GF(p,k);
+ // R<x>:=PolynomialRing(K);
 
   K := FiniteField(p, k); // finite field of size p^k
 
   // Sample a random point
   E := EllipticCurve([0,K!A,0,K!1,0]);
-  N := #E ; 
   P := Random(E);
   x_P := [P[0],P[2]];
   P_l:= LADDER(A,N/l,x_P);
@@ -28,7 +31,83 @@ point_finding:= function(A, p, k, l)
 
 end function;
 
+// Optimized point finding
 
+//The function delta returns the image of a point P in E by the endomorphism delta defined as the division of (X^k-1) and the kth cyclotomic polynomial
+
+delta := function(P,E,k) 
+  if (k in {2,3,5,7,11}) then
+    frobenius := FrobeniusMap(E);
+    R := forbenius(P) - P;
+    return R;
+    else
+     if (k eq 4) then
+      frobenius_2:= FrobeniusMap(E,2);
+      R := frobenius_2(P) - P;
+      return R;
+     else
+      if (k eq 6) then
+        frobenius := FrobeniusMap(E);
+        frobenius_3:= FrobeniusMap(E,3);
+        R := (frobenius(P) + P)*(frobenius_3(P) - P);
+        return R;
+       else
+        if (k eq 8) then
+          frobenius_4:= FrobeniusMap(E,4);
+          R := frobenius_4(P) - P;
+          return R;
+         else
+          if (k eq 9) then
+            frobenius_3:= FrobeniusMap(E,3);
+            R := frobenius_3(P) - P;
+            return R;
+           else
+            if (k eq 10) then
+              frobenius := FrobeniusMap(E);
+              frobenius_5:= FrobeniusMap(E,5);
+              R := (frobenius(P) + P)*(frobenius_5(P) - P);
+              return R;
+             else
+              if (k eq 12) then
+                frobenius_2:= FrobeniusMap(E,2);
+                frobenius_6:= FrobeniusMap(E,6);
+                R := (frobenius_2(P) + P)*(frobenius_6(P) - P);
+                return R;
+              end if;
+            end if;
+          end if;
+        end if;
+      end if;
+    end if;
+  end if;
+         
+optimized_point_finding:= function(A, p, k, l, Nratio)
+//Checks
+
+
+ // set base field
+ // K:= GF(p,k);
+ // R<x>:=PolynomialRing(K);
+
+  K := FiniteField(p, k); // finite field of size p^k
+
+  // Sample a random point
+  E := EllipticCurve([0,K!A,0,K!1,0]);
+  P:=Random(E);
+  P:= delta(P,E,k);
+  x_P := [P[0],P[2]];
+  P_l:= LADDER(A,Nratio/l,x_P);
+  while IsZero(P_l) do
+    P:=Random(E);
+    P:= delta(P,E,k);
+    x_P := [P[0],P[2]];
+    P_l:= LADDER(A,Nratio/l,x_P);
+  end while;
+  return P_l;
+
+end function;
+   
+      
 // step 2: compute the Velu formulae to obtain the isogeny iso with kernel generator G, and its codomain E1 with monty coeff A1
 // input: G, l, A0, output: iso, A1
 
