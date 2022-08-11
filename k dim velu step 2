@@ -1,1 +1,18 @@
 
+// step 2: compute the Velu formulae to obtain the isogeny iso with kernel generator G, and its codomain E1 with monty coeff A1
+// input: (montgomery coefficient A0 for curve E0) and (order l) and (finite field p and k) and (kernel point G),
+// output: (isogeny iso) and ( montgomery coefficient A1 for curve E1)
+// assume inputs are well defined for the context
+
+// regular Velu
+
+// set base field
+// K:= GF(p,k);
+// R<x>:=PolynomialRing(K);
+
+K := FiniteField(p, k); // finite field of size p^k;
+E0 := EllipticCurve([0,K!A0,0,K!1,0]);
+
+IsogenyFromKernel(E0, &*{(x-(n*G)[1]) : n in [1..l-1]});
+
+// optimized Velu
