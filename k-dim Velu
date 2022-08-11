@@ -4,7 +4,7 @@ import "Ben's reference ladder.m": xDBL , xADD , LADDER;
 // input: (montgomery coefficient A for curve E) and (order l) and (finite field p and k) and (number of points N), output: (G a point of order l on E in K) 
 // assume inputs are well defined for the context
 
-// regular point finding
+// regular point  finding
 
 point_finding:= function(A, p, k, l, N)
 //Checks
