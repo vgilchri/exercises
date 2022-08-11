@@ -6,13 +6,14 @@
 
 // regular Velu
 
-// set base field
-// K:= GF(p,k);
-// R<x>:=PolynomialRing(K);
+Velu_formula := function (A0,l,p,k,G)
+  // set base field
+  // K:= GF(p,k);
+  // R<x>:=PolynomialRing(K);
 
-K := FiniteField(p, k); // finite field of size p^k;
-E0 := EllipticCurve([0,K!A0,0,K!1,0]);
+  K := FiniteField(p, k); // finite field of size p^k;
+  E0 := EllipticCurve([0,K!A0,0,K!1,0]);
 
-IsogenyFromKernel(E0, &*{(x-(n*G)[1]) : n in [1..l-1]});
+  IsogenyFromKernel(E0, &*{(x-(n*G)[1]) : n in [1..l-1]});
 
 // optimized Velu
