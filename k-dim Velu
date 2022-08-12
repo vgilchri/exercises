@@ -1,4 +1,5 @@
-import "Ben's reference ladder.m": xDBL , xADD , LADDER;
+//import "Ben's reference ladder.m": xDBL , xADD , LADDER;
+load "Ben's reference ladder.m";
 
 // step 1: find a point G of order l 
 // input: (montgomery coefficient A for curve E) and (order l) and (finite field p and k) and (number of points N), output: (G a point of order l on E in K) 
