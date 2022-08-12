@@ -38,7 +38,7 @@ end function;
 delta := function(P,E,k) 
   if (k in {2,3,5,7,11}) then
     frobenius := FrobeniusMap(E);
-    R := forbenius(P) - P;
+    R := frobenius(P) - P;
     return R;
     else
      if (k eq 4) then
