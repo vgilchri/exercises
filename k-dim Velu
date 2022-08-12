@@ -80,6 +80,7 @@ delta := function(P,E,k)
       end if;
     end if;
   end if;
+ end function;
          
 optimized_point_finding:= function(A, p, k, l, Nratio)
 //Checks
