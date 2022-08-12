@@ -9,7 +9,7 @@ import "Ben's reference ladder.m": xDBL , xADD , LADDER;
 point_finding:= function(A, p, k, l, N)
 //Checks
   error if (l-1 mod k eq 0), "k ne divise pas l-1";
-  error if (k>13), "k est trop grand";
+  error if (k  gt 13), "k est trop grand";
 
  // set base field
  // K:= GF(p,k);
