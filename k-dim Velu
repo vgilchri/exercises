@@ -22,7 +22,7 @@ point_finding:= function(A, p, k, l, N)
   E := EllipticCurve([0,K!A,0,K!1,0]);
   P := Random(E);
   x_P := [P[1],P[3]];
-  m:= RngIntElt(N/l)
+  m:= RngIntElt(N/l);
   P_l:= LADDER(A,m,x_P);
   while IsZero(P_l) do
     P:=Random(E);
