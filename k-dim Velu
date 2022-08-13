@@ -21,13 +21,15 @@ point_finding:= function(A, p, k, l, N, m)
   // Sample a random point
   E := EllipticCurve([0,K!A,0,K!1,0]);
   P := Random(E);
-  x_P := [P[1],P[3]];
+  //x_P := [P[1],P[3]];
   //m:= RngIntElt(N/l);
-  P_l:= LADDER(A,m,x_P);
+  //P_l:= LADDER(A,m,x_P);
+  P_l:= m*P;
   while IsZero(P_l) do
     P:=Random(E);
-    x_P := [P[1],P[3]];
-    P_l:= LADDER(A,m,x_P);
+    //x_P := [P[1],P[3]];
+    //P_l:= LADDER(A,m,x_P);
+    P_l:= m*P;
   end while;
   return P_l;
 
