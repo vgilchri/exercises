@@ -2,12 +2,12 @@
 load "Ben's reference ladder";
 
 // step 1: find a point G of order l 
-// input: (montgomery coefficient A for curve E) and (order l) and (finite field p and k) and (number of points N), output: (G a point of order l on E in K) 
+// input: (montgomery coefficient A for curve E) and (order l) and (finite field p and k) and (number of points N) and (m=N/l), output: (G a point of order l on E in K) 
 // assume inputs are well defined for the context
 
 // regular point  finding
 
-point_finding:= function(A, p, k, l, N)
+point_finding:= function(A, p, k, l, N, m)
 //Checks
   error if (l-1 mod k eq 0), "k ne divise pas l-1";
   error if (k  gt 13), "k est trop grand";
@@ -22,7 +22,7 @@ point_finding:= function(A, p, k, l, N)
   E := EllipticCurve([0,K!A,0,K!1,0]);
   P := Random(E);
   x_P := [P[1],P[3]];
-  m:= RngIntElt(N/l);
+  //m:= RngIntElt(N/l);
   P_l:= LADDER(A,m,x_P);
   while IsZero(P_l) do
     P:=Random(E);
