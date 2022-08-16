@@ -36,49 +36,44 @@ end function;
 //The function delta returns the image of a point P in E by the endomorphism delta defined as the division of (X^k-1) and the kth cyclotomic polynomial
 
 delta := function(P,E,k) 
+
   if (k in {2,3,5,7,11}) then
     frobenius := FrobeniusMap(E);
     R := frobenius(P) - P;
     return R;
-    else
-     if (k eq 4) then
-      frobenius_2:= FrobeniusMap(E,2);
-      R := frobenius_2(P) - P;
-      return R;
-     else
-      if (k eq 6) then
-        frobenius := FrobeniusMap(E);
-        frobenius_3:= FrobeniusMap(E,3);
-        R := (frobenius(P) + P)*(frobenius_3(P) - P);
-        return R;
-       else
-        if (k eq 8) then
-          frobenius_4:= FrobeniusMap(E,4);
-          R := frobenius_4(P) - P;
-          return R;
-         else
-          if (k eq 9) then
-            frobenius_3:= FrobeniusMap(E,3);
-            R := frobenius_3(P) - P;
-            return R;
-           else
-            if (k eq 10) then
-              frobenius := FrobeniusMap(E);
-              frobenius_5:= FrobeniusMap(E,5);
-              R := (frobenius(P) + P)*(frobenius_5(P) - P);
-              return R;
-             else
-              if (k eq 12) then
-                frobenius_2:= FrobeniusMap(E,2);
-                frobenius_6:= FrobeniusMap(E,6);
-                R := (frobenius_2(P) + P)*(frobenius_6(P) - P);
-                return R;
-              end if;
-            end if;
-          end if;
-        end if;
-      end if;
-    end if;
+    
+  elif (k eq 4) then
+    frobenius_2:= FrobeniusMap(E,2);
+    R := frobenius_2(P) - P;
+    return R;
+    
+  elif (k eq 6) then
+    frobenius := FrobeniusMap(E);
+    frobenius_3:= FrobeniusMap(E,3);
+    R := (frobenius(P) + P)*(frobenius_3(P) - P);
+    return R;
+    
+   elif (k eq 8) then
+    frobenius_4:= FrobeniusMap(E,4);
+    R := frobenius_4(P) - P;
+    return R;
+          
+   elif (k eq 9) then
+    frobenius_3:= FrobeniusMap(E,3);
+    R := frobenius_3(P) - P;
+    return R;
+    
+   elif (k eq 10) then
+    frobenius := FrobeniusMap(E);
+    frobenius_5:= FrobeniusMap(E,5);
+    R := (frobenius(P) + P)*(frobenius_5(P) - P);
+    return R;
+   
+   elif (k eq 12) then
+    frobenius_2:= FrobeniusMap(E,2);
+    frobenius_6:= FrobeniusMap(E,6);
+    R := (frobenius_2(P) + P)*(frobenius_6(P) - P);
+    return R;
   end if;
  end function;
          
