@@ -21,13 +21,11 @@ point_finding:= function(A, p, k, l, N, m)
   // Sample a random point
   E := EllipticCurve([0,K!A,0,K!1,0]);
   //m:= RngIntElt(N/l);
-  //P_l:= LADDER(A,m,x_P);
   P_l:=K!0;
   while IsZero(P_l) do
     P:=Random(E);
     x_P := [P[1],P[3]];
     P_l:= LADDER(A,m,x_P);
-    //P_l:= m*P;
   end while;
   return P_l;
 
@@ -84,7 +82,7 @@ delta := function(P,E,k)
   end if;
  end function;
          
-optimized_point_finding:= function(A, p, k, l, Nratio)
+optimized_point_finding:= function(A, p, k, l, Nratio,m)
 //Checks
 
 
@@ -101,16 +99,11 @@ optimized_point_finding:= function(A, p, k, l, Nratio)
     P:=Random(E);
     P:= delta(P,E,k);
     x_P := [P[1],P[3]];
-    P_l:= LADDER(A,Nratio/l,x_P);
+    P_l:= LADDER(A,m,x_P);
   end while;
   return P_l;
 
 end function;
    
       
-// step 2: compute the Velu formulae to obtain the isogeny iso with kernel generator G, and its codomain E1 with monty coeff A1
-// input: G, l, A0, output: iso, A1
 
-// regular Velu
-
-// optimized Velu
