@@ -108,7 +108,7 @@ optimized_point_finding:= function(A, p, k, l, Nratio,m)
   end while;
   
   T:= Realtime() - t1;
-  print "Running time :",T,"nb itérations : ",res;;
+  print "Running time :",T,"nb itérations : ",res;
   
   return P_l;
 
