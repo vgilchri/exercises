@@ -16,6 +16,6 @@ Velu_formula := function (A0,l,p,k,G)
   E0 := EllipticCurve([0,K!A0,0,K!1,0]);
 
   IsogenyFromKernel(E0, &*{(x-(n*G)[1]) : n in [1..l-1]});
-  return 0;
+
 
 // optimized Velu
