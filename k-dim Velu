@@ -1,4 +1,3 @@
-//import "Ben's reference ladder": xDBL , xADD , LADDER;
 load "Ben's reference ladder";
 
 // step 1: find a point G of order l 
@@ -33,7 +32,7 @@ point_finding:= function(A, p, k, l, N, m)
   end while;
   
   T:= ClockCycles() - t1;
-  print "Clock cyles :",T,"nb itérations : ",res;
+  print "Clock cyles :",T,"\n nb itérations : ",res;
   
   return P_l;
 
@@ -85,6 +84,10 @@ delta := function(P,E,k)
   end if;
  end function;
          
+// input: (montgomery coefficient A for curve E) and (order l) and (finite field p and k) and (number of points Nratio=N/N1) and (m=Nratio/l), output: (G a point of order l on E in K) 
+// assume inputs are well defined for the context
+         
+         
 optimized_point_finding:= function(A, p, k, l, Nratio,m)
  //Checks
  error if (l-1 mod k eq 0), "k ne divise pas l-1";
@@ -112,7 +115,7 @@ optimized_point_finding:= function(A, p, k, l, Nratio,m)
   end while;
   
   T:= ClockCycles() - t1;
-  print "Clock cyles :",T,"nb itérations : ",res;
+  print "Clock cyles :",T,"\n nb itérations : ",res;
   
   return P_l;
 
