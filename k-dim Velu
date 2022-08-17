@@ -11,6 +11,8 @@ point_finding:= function(A, p, k, l, N, m)
 //Checks
   error if (l-1 mod k eq 0), "k ne divise pas l-1";
   error if (k  gt 13), "k est trop grand";
+  
+  t1 := Realtime();
 
  // set base field
  // K:= GF(p,k);
@@ -27,6 +29,10 @@ point_finding:= function(A, p, k, l, N, m)
     x_P := [P[1],P[3]];
     P_l:= LADDER(A,m,x_P);
   end while;
+  
+  T:= Realtime() - t1;
+  print "Running time :",T;
+  
   return P_l;
 
 end function;
@@ -79,7 +85,7 @@ delta := function(P,E,k)
          
 optimized_point_finding:= function(A, p, k, l, Nratio,m)
 //Checks
-
+ t1 := Realtime();
 
  // set base field
  // K:= GF(p,k);
@@ -96,6 +102,10 @@ optimized_point_finding:= function(A, p, k, l, Nratio,m)
     x_P := [P[1],P[3]];
     P_l:= LADDER(A,m,x_P);
   end while;
+  
+  T:= Realtime() - t1;
+  print "Running time :",T;
+  
   return P_l;
 
 end function;
