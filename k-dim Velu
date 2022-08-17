@@ -86,8 +86,12 @@ delta := function(P,E,k)
  end function;
          
 optimized_point_finding:= function(A, p, k, l, Nratio,m)
-//Checks
+ //Checks
+ error if (l-1 mod k eq 0), "k ne divise pas l-1";
+ error if (k  gt 13), "k est trop grand";
+  
  t1 := ClockCycles();
+ 
 
  // set base field
  // K:= GF(p,k);
