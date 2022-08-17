@@ -32,7 +32,7 @@ point_finding:= function(A, p, k, l, N, m)
   end while;
   
   T:= ClockCycles() - t1;
-  print "Clock cyles :",T,"\n nb itérations : ",res;
+  print "Clock cyles :",T,"\nNb itérations : ",res;
   
   return P_l;
 
@@ -115,7 +115,7 @@ optimized_point_finding:= function(A, p, k, l, Nratio,m)
   end while;
   
   T:= ClockCycles() - t1;
-  print "Clock cyles :",T,"\n nb itérations : ",res;
+  print "Clock cyles :",T,"\nNb itérations : ",res;
   
   return P_l;
 
