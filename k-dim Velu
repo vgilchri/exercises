@@ -57,7 +57,8 @@ delta := function(P,E,k)
   elif (k eq 6) then
     frobenius := FrobeniusMap(E);
     frobenius_3:= FrobeniusMap(E,3);
-    R := (frobenius(P) + P)*(frobenius_3(P) - P);
+    res:=(frobenius_3(P) - P);
+    R := (frobenius(res) + res);
     return R;
     
    elif (k eq 8) then
@@ -73,13 +74,15 @@ delta := function(P,E,k)
    elif (k eq 10) then
     frobenius := FrobeniusMap(E);
     frobenius_5:= FrobeniusMap(E,5);
-    R := (frobenius(P) + P)*(frobenius_5(P) - P);
+    res:=(frobenius_5(P) - P);
+    R := (frobenius(res) + res);
     return R;
    
    elif (k eq 12) then
     frobenius_2:= FrobeniusMap(E,2);
     frobenius_6:= FrobeniusMap(E,6);
-    R := (frobenius_2(P) + P)*(frobenius_6(P) - P);
+    res:=(frobenius_6(P) - P);
+    R := (frobenius_2(res) + res);
     return R;
   end if;
  end function;
