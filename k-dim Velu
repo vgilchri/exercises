@@ -147,18 +147,18 @@ end function;
   // put vectors in matrix
   M:= Transpose(Matrix(F,k+1,k,S));
   // solve matrix 
-  W:= Vector(F, Insert(Eltseq(F!0),k+1,F!0));
-  V:=Solution(M, W);
+  // W:= Vector(F, Insert(Eltseq(F!0),k+1,F!0));
+  V:=EchelonForm(M);
   V;
   // output solution, normalizing by making first value one, this is the min. poly. 
-  if not(V[1] eq 0) then
-    n:= V[1];
-    j:=1;
-    while j lt k+1 do
-      V[j] /:= n;
-      j+:=1;
-   end while;
-  end if;
+  //if not(V[1] eq 0) then
+  //  n:= V[1];
+  //  j:=1;
+  //  while j lt k+1 do
+  //    V[j] /:= n;
+  //    j+:=1;
+  // end while;
+  //end if;
   return V;
  end function;
 
