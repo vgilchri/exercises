@@ -147,7 +147,8 @@ end function;
   // put vectors in matrix
   M:= Matrix(F,k+1,k,S);
   // solve matrix 
-  V:=Solution(M, Eltseq(F!0));
+  W:= Vector(F, Eltseq(F!0));
+  V:=Solution(M, W);
   // output solution, normalizing by making first value one, this is the min. poly. 
   n:= V[1];
   j:=1;
@@ -158,5 +159,13 @@ end function;
   return V;
  end function;
 
+test_gaus:= function()
+  E:= GF(11,4);
+  a:= Random(E);
+  a;
+  A:= gauss_min_poly(a, 11, 4);
+  A;
+  MinimumPolynomial(a);
+end function;
 
 
