@@ -148,12 +148,9 @@ end function;
   M:= Matrix(F,k+1,k,S);
   "matrix is";
   M;
-  N:= Vector(F, Eltseq(F!0));
-  "solving for V x M =";
-  N;
   // solve matrix 
   // W:= Vector(F, Insert(Eltseq(F!0),k+1,F!0));
-  V:=Solution(M,N);
+  V:=Nullspace(M);
   "solution is:";
   // output solution, normalizing by making first value one, this is the min. poly. 
   //if not(V[1] eq 0) then
