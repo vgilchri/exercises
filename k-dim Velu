@@ -140,12 +140,11 @@ end function;
     g_new := g_last + g;
     S[i] := Eltseq(g_new);
     g_last := g_new;
-    i;
     i+:=1;
   end while;
   Insert(S,1,Eltseq(F!1));
   // put vectors in matrix
-  M:= Matrix(F,k+1,k,S);
+  M:= Matrix(F,k,k+1,S);
   // solve matrix 
   V:=Solution(M, Insert(Eltseq(F!0),1,0));
   // output solution, normalizing by making first value one, this is the min. poly. 
