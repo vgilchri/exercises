@@ -140,6 +140,7 @@ end function;
     g_new := g_last + g;
     S[i] := Eltseq(g_new);
     g_last := g_new;
+    i;
     i+:=1;
   end while;
   Insert(S,1,Eltseq(F!1));
