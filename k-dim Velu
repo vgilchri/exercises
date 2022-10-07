@@ -145,9 +145,9 @@ end function;
   S:=Insert(S,1,Eltseq(F!1));
   S;
   // put vectors in matrix
-  M:= Matrix(F,k+1,k,S);
+  M:= Transpose(Matrix(F,k+1,k,S));
   // solve matrix 
-  W:= Vector(F, Eltseq(F!0));
+  W:= Vector(F, Insert(Eltseq(F!0),k+1,F!0));
   V:=Solution(M, W);
   V;
   // output solution, normalizing by making first value one, this is the min. poly. 
