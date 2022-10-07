@@ -150,7 +150,7 @@ end function;
   V:=Solution(M, Insert(Eltseq(F!0),1,0));
   // output solution, normalizing by making first value one, this is the min. poly. 
   n:= V[1];
-  j=1;
+  j:=1;
   while j lt k+1 do
     V[j] /:= n;
     j+:=1;
