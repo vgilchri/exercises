@@ -153,6 +153,7 @@ end function;
   // W:= Vector(F, Insert(Eltseq(F!0),k+1,F!0));
   V:=EchelonForm(M);
   W:= EchelonForm(N);
+  W;
   // output solution, normalizing by making first value one, this is the min. poly. 
   //if not(V[1] eq 0) then
   //  n:= V[1];
@@ -162,7 +163,7 @@ end function;
   //    j+:=1;
   // end while;
   //end if;
-  return V,W;
+  return V;
  end function;
 
 test_gaus:= function()
