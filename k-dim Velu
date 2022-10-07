@@ -136,7 +136,7 @@ end function;
   i:= 1;
   g:= F! x_G;
   g_last:= F! 0;
-  while i lt (k+1)
+  while i lt (k+1) do
     g_new := g_last + g;
     S[i] := Eltseq(g_new);
     g_last := g_new;
@@ -151,7 +151,7 @@ end function;
   // output solution, normalizing by making first value one, this is the min. poly. 
   n:= V[1];
   j=1;
-  while j lt k+1
+  while j lt k+1 do
     V[j] /:= n;
     j+:=1;
   end while;
