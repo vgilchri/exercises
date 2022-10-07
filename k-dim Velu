@@ -165,7 +165,7 @@ test_gaus:= function()
   a;
   A:= gauss_min_poly(a, 11, 4);
   A;
-  MinimumPolynomial(a);
+  MinimalPolynomial(a);
 end function;
 
 
