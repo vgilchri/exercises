@@ -149,13 +149,16 @@ end function;
   // solve matrix 
   W:= Vector(F, Eltseq(F!0));
   V:=Solution(M, W);
+  V;
   // output solution, normalizing by making first value one, this is the min. poly. 
-  n:= V[1];
-  j:=1;
-  while j lt k+1 do
-    V[j] /:= n;
-    j+:=1;
-  end while;
+  if not(V[1] eq 0) then
+    n:= V[1];
+    j:=1;
+    while j lt k+1 do
+      V[j] /:= n;
+      j+:=1;
+   end while;
+  end if;
   return V;
  end function;
 
