@@ -151,6 +151,8 @@ end function;
   // solve matrix 
   // W:= Vector(F, Insert(Eltseq(F!0),k+1,F!0));
   V:=Nullspace(M);
+  "transpose solution is";
+  NullspaceOfTranspose(M);
   "solution is:";
   // output solution, normalizing by making first value one, this is the min. poly. 
   //if not(V[1] eq 0) then
