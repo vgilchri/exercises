@@ -148,7 +148,7 @@ end function;
   M:= Matrix(F,k+1,k,S);
   "matrix is";
   M;
-  N:= Vector(F, EltSeq(F!0));
+  N:= Vector(F, Eltseq(F!0));
   "solving for V x M =";
   N;
   // solve matrix 
