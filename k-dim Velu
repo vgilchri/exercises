@@ -131,7 +131,7 @@ end function;
     // make set S, l-1/2 long, with all zeros
     // we will replace each zero with the i^th multiple of G later on
     S:=[];
-    while i < ((l-1)/2 + 1) do
+    while i lt ((l-1)/2 + 1) do
       S[i]:=0;
       i+:= 1;
      end while;
@@ -161,7 +161,7 @@ end function;
   i:= 1;
   g:= F! x_G;
   g_last:= F! 0;
-  while i < (k+1)
+  while i lt (k+1)
     g_new := g_last + g;
     S[i] := Eltseq(g_new);
     g_last := g_new;
@@ -175,7 +175,7 @@ end function;
   // output solution, normalizing by making first value one, this is the min. poly. 
   n:= V[1];
   j=1;
-  while j<k+1;
+  while j lt k+1;
     V[j] /:= n;
     j+:=1;
   end while;
