@@ -147,7 +147,7 @@ end function;
   // put vectors in matrix
   M:= Matrix(F,k+1,k,S);
   // solve matrix 
-  V:=Solution(M, Insert(Eltseq(F!0),1,0));
+  V:=Solution(M, Eltseq(F!0));
   // output solution, normalizing by making first value one, this is the min. poly. 
   n:= V[1];
   j:=1;
