@@ -123,32 +123,7 @@ optimized_point_finding:= function(A, p, k, l, Nratio,m)
   return P_l;
 
 end function;
-   
-   
- // compute division polynomial
- // assume given G, a point of order \ell... will use S:={1,... (l-1)/2}
- div_poly:= function(x_G, l)
-    // make set S, l-1/2 long, with all zeros
-    // we will replace each zero with the i^th multiple of G later on
-    S:=[];
-    while i lt ((l-1)/2 + 1) do
-      S[i]:=0;
-      i+:= 1;
-     end while;
-    S[1]:= x_G;
-    // compute required scalar multiples of G and place in S
-    j:= ((l-1)/2);
-    while j gt 0
-      if (S[j] eq 0) then
-        // compute scalar multiple [j]G
-        // for now we do each multiplication indvidually but future FIXME is to save computations from ladder
-        // to do so, input ladder code here, and add lines to loops that check values of S as it goes
-        S[j]:= LADDER(A,j,x_G);
-      end if;
-      j-:=1;
-    end while;
- // compute polynomial
- end function; 
+ 
  
  // compute minimal polynomial using gaussian elimination 
  // given x_G, p, k (where G is in the k^th extension of F_p)
