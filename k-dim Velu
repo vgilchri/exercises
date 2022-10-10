@@ -143,6 +143,7 @@ end function;
     i+:=1;
   end while;
   S:=Insert(S,1,Eltseq(F!1));
+  "coefficient vectors are:";
   S;
   // put vectors in matrix
   M:= Matrix(F,k+1,k,S);
@@ -172,6 +173,7 @@ test_gaus:= function()
   a;
   A:= gauss_min_poly(a, 11, 4);
   A;
+  "magma's minimal polynomial is:";
   return MinimalPolynomial(a);
 end function;
 
