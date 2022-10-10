@@ -170,6 +170,7 @@ end function;
 test_gaus:= function()
   E:= GF(11,4);
   a:= Random(E);
+  "test element is:";
   a;
   A:= gauss_min_poly(a, 11, 4);
   A;
