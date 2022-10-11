@@ -136,7 +136,7 @@ end function;
   M;
   // solve matrix 
   // W:= Vector(F, Insert(Eltseq(F!0),k+1,F!0));
-  V:=Eltseq(Basis(Kernel(M)));
+  V:=Eltseq(Basis(Kernel(M))[1]);
   "solution is:";
   V;
   // output solution, normalizing by making first value one, this is the min. poly. 
