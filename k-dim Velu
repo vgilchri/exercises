@@ -136,7 +136,7 @@ end function;
   M;
   // solve matrix 
   // W:= Vector(F, Insert(Eltseq(F!0),k+1,F!0));
-  V:=Eltseq(Kernel(M));
+  V:=Eltseq(Basis(Kernel(M)));
   "solution is:";
   // output solution, normalizing by making first value one, this is the min. poly. 
   if not(V[k+1] eq 0) and not(V[k+1] eq 1) then
@@ -151,7 +151,7 @@ end function;
   return V;
  end function;
 
-test_gaus:= function()
+test_gauss:= function()
   E:= GF(11,4);
   a:= Random(E);
   "test element is:";
