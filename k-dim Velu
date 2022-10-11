@@ -137,18 +137,14 @@ end function;
   // solve matrix 
   // W:= Vector(F, Insert(Eltseq(F!0),k+1,F!0));
   V:=Eltseq(Basis(Kernel(M))[1]);
-  "solution is:";
+  "solution before normalization:";
   V;
   // output solution, normalizing by making first value one, this is the min. poly. 
   if not(V[k+1] eq 0) and not(V[k+1] eq 1) then
     n:= V[k+1];
     for j in [1..k+1] do V[j] /:= n; end for;
-  //  j:=1;
-  //  while j lt k+1 do
-  //    V[j] /:= n;
-  //    j+:=1;
-  // end while;
   end if;
+  "solution after normalization:";
   return V;
  end function;
 
