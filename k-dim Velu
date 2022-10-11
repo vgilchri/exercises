@@ -126,34 +126,17 @@ end function;
  
  
  // compute minimal polynomial using gaussian elimination 
- // given x_G, p, k (where G is in the k^th extension of F_p)
- gauss_min_poly:= function(x_G, p,k)
+ // given g=x_G, p, k (where G is in the k^th extension of F_p)
+ gauss_min_poly:= function(g, p,k)
   // set base field to be F_{q^k}, make sequence to store coeff. matrix rows
-  F:= GF(p,k);
-  S:=[];
-  // get k multiples of x_G 
-  // put multiples in coefficient vector form Eltseq(alpha);
-  i:= 1;
-  g:= F! x_G;
-  g_last:= F! 0;
-  while i lt (k+1) do
-    g_new := g_last + g;
-    S[i] := Eltseq(g_new);
-    g_last := g_new;
-    i+:=1;
-  end while;
-  S:=Insert(S,1,Eltseq(F!1));
-  "coefficient vectors are:";
-  S;
-  // put vectors in matrix
-  M:= Matrix(F,k+1,k,S);
+  F<e>:= GF(p,k);
+  // put coefficient vectors of g^i into a matrix
+  M:= Matrix([ElementToSequence(g^i): i in [0..k]]);
   "matrix is";
   M;
   // solve matrix 
   // W:= Vector(F, Insert(Eltseq(F!0),k+1,F!0));
-  V:=Nullspace(M);
-  "transpose solution is";
-  NullspaceOfTranspose(M);
+  V:=Kernel(M);
   "solution is:";
   // output solution, normalizing by making first value one, this is the min. poly. 
   //if not(V[1] eq 0) then
