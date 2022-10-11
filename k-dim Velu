@@ -138,6 +138,7 @@ end function;
   // W:= Vector(F, Insert(Eltseq(F!0),k+1,F!0));
   V:=Eltseq(Basis(Kernel(M)));
   "solution is:";
+  V;
   // output solution, normalizing by making first value one, this is the min. poly. 
   if not(V[k+1] eq 0) and not(V[k+1] eq 1) then
     n:= V[k+1];
