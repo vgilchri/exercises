@@ -33,13 +33,14 @@ Set_finding:=function(A,p,l,list)
         rate:=#E1/l;
         G:=rate*G0;
         end while;
-      R<T>:=PolynomialRing(K2);
-      poly:=R!1;
+      R2<T>:=PolynomialRing(K2);
+      poly:=R2!1;
       point:=G;
       for i in [1 .. 7] do
         poly:=poly*(X-point[1]); 
         point := point +G;
         end for;
+      poly:= ChangeRing(poly,K);
       E1, phi:=IsogenyfromKernel(E,poly); 
       subgroup := Kernel(phi);
       
