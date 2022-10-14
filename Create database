@@ -1,0 +1,39 @@
+Set_finding:=function(A,p,l,list)
+
+  K:=GF(p);
+  E:= EllipticCurve([0,K!A,0,K!1,0]);
+  j:=jInvariant(E);
+  R<T>:=PolynomialRing(K);
+  phi_l:=ClassicalModularPolynomial(l);
+  phi_l_j:=Evaluate(phi_l,[j,T]);
+  Factored_phi_l_j:=Factorization(phi_l_j);
+  res=False;
+  
+  for poly in Factored_phi_l_j do 
+    res:=Degree(poly[1]) eq 1;
+    end for;
+    
+  if res do
+    N:=#E;
+    t:=p+1-N;
+    p_l:=p mod l;
+    t_l:= t mod l;
+    M<x>:=PolynomialRing(Rationnals());
+    f:=x^2-t_l*x+p_l;
+    roots_f:=Roots(f);
+    K0:=GF(l);
+    
+    for lambda in roots_f do
+      k:=Order(K0!lambda[1]);
+      K2:=GF(p^k);
+      E1:= EllipticCurve([0,K2!A,0,K2!1,0]);
+      G:=Random(E1);
+      while Order(G) ne l do
+        G0:=Random(E1);
+        rate:=#E1/l;
+        G:=rate*G0;
+        end while;
+      
+      
+      Append(list, [*  *]);
+      
