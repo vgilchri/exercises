@@ -55,7 +55,7 @@ Set_finding:=procedure(A,p,l,~list)
         Append(~list, [* A,p,l,k,E,j,N,G,E1,phi,subgroup *]);
         
       else  
-        printf("problem arised") 
+        printf("problem arised"); 
       end if;
     end for;
   end if;
