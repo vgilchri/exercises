@@ -28,6 +28,7 @@ Set_finding:=procedure(A,p,l,~list)
       printf "-- k is %o\n", k;
       printf "-- A is %o\n", A;
       printf "-- p is %o\n", p;
+      printf "-- l is %o\n", l;
       K2:=GF(p^k);
       E1 := BaseExtend(E, K2);
       // E1:= EllipticCurve([0,K2!A,0,K2!1,0]);
