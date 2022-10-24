@@ -53,6 +53,9 @@ Set_finding:=procedure(A,p,l,~list)
         subgroup := Kernel(phi);
       
         Append(~list, [* A,p,l,k,E,j,N,G,E1,phi,subgroup *]);
+        
+      else do 
+        printf("problem arised") 
       end if;
     end for;
   end if;
