@@ -1,7 +1,13 @@
 Set_finding:=procedure(A,p,l,~list)
 
   K:=GF(p);
-  E:= EllipticCurve([0,K!A,0,K!1,0]);
+  try
+    E:= EllipticCurve([0,K!A,0,K!1,0]);
+  catch e 
+    "curve is singular";
+    end procedure;
+  end try;
+  
   j:=jInvariant(E);
   R<T>:=PolynomialRing(K);
   phi_l:=ClassicalModularPolynomial(l);
