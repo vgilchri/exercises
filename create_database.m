@@ -35,25 +35,27 @@ Set_finding:=procedure(A,p,l,~list)
       exponent := Exponent(AbelianGroup(E1));
       assert exponent mod l eq 0;
       rate:= exponent div l;
-      repeat
-        G:=rate*Random(E1);
-      until Order(G) eq l and (Integers( )!lambda[1])*G eq E1![G[1]^p,G[2]^p];  // Check eigenvalue
-      R2<T>:=PolynomialRing(K2);
-      poly:=R2!1;
-      point:=G;
-      for i in [1 .. (l-1) div 2] do
-        poly *:= (T-point[1]); 
-        point := point +G;
-      end for;
-      printf "-- poly is %o\n", poly;
-      poly:= ChangeRing(poly,K);
-      printf "-- E is %o\n-- poly is %o\n", E, poly;
-      E1, phi:=IsogenyFromKernel(E,poly); 
-      subgroup := Kernel(phi);
+      if rate mod l neq 0 do
+        repeat
+          G:=rate*Random(E1);
+        until Order(G) eq l and (Integers( )!lambda[1])*G eq E1![G[1]^p,G[2]^p];  // Check eigenvalue
+        R2<T>:=PolynomialRing(K2);
+        poly:=R2!1;
+        point:=G;
+        for i in [1 .. (l-1) div 2] do
+          poly *:= (T-point[1]); 
+          point := point +G;
+        end for;
+        printf "-- poly is %o\n", poly;
+        poly:= ChangeRing(poly,K);
+        printf "-- E is %o\n-- poly is %o\n", E, poly;
+        E1, phi:=IsogenyFromKernel(E,poly); 
+        subgroup := Kernel(phi);
       
-      Append(~list, [* A,p,l,k,E,j,N,G,E1,phi,subgroup *]);
-      end for;
-    end if;
+        Append(~list, [* A,p,l,k,E,j,N,G,E1,phi,subgroup *]);
+      end if;
+    end for;
+  end if;
   
 end procedure;      
 
