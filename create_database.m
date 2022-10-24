@@ -35,7 +35,7 @@ Set_finding:=procedure(A,p,l,~list)
       exponent := Exponent(AbelianGroup(E1));
       assert exponent mod l eq 0;
       rate:= exponent div l;
-      if (rate mod l) ne 0 do
+      if (rate mod l) ne 0 then
         repeat
           G:=rate*Random(E1);
         until Order(G) eq l and (Integers( )!lambda[1])*G eq E1![G[1]^p,G[2]^p];  // Check eigenvalue
@@ -54,7 +54,7 @@ Set_finding:=procedure(A,p,l,~list)
       
         Append(~list, [* A,p,l,k,E,j,N,G,E1,phi,subgroup *]);
         
-      else do 
+      else  
         printf("problem arised") 
       end if;
     end for;
