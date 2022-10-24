@@ -66,6 +66,6 @@ Create_database:=function()
         end for;
     end for;
   end for;
-  return Databse_list ;
+  return Database_list ;
 end function;
 
