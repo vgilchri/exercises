@@ -1,4 +1,4 @@
-Set_finding:=procedure(A,p,l,~list)
+Set_finding:=procedure(A,p,l,~list,~list2)
 
   K:=GF(p);
   E:= EllipticCurve([0,K!A,0,K!1,0]); 
@@ -56,6 +56,7 @@ Set_finding:=procedure(A,p,l,~list)
         
       else  
         printf("problem arised"); 
+        Append(~list2, [* A,p,l,k,E,j,N*]);
       end if;
     end for;
   end if;
@@ -66,18 +67,19 @@ Create_database:=function()
 
   primes := [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149];
   Database_list := [* *];
+  errors_list := [* *];
   for p in primes do
     l_primes:= [l: l in primes| l lt p];
     for l in l_primes do
         for A in [1 .. p-1] do
           try
-            Set_finding(A,p,l,~Database_list);
+            Set_finding(A,p,l,~Database_list,~errors_list);
           catch e 
             "some error";
           end try;
         end for;
     end for;
   end for;
-  return Database_list ;
+  return Database_list,errors_list ;
 end function;
 
