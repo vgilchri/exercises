@@ -1,13 +1,7 @@
 Set_finding:=procedure(A,p,l,~list)
 
   K:=GF(p);
-  try
-    E:= EllipticCurve([0,K!A,0,K!1,0]);
-  catch e 
-    "curve is singular";
-    end procedure;
-  end try;
-  
+  E:= EllipticCurve([0,K!A,0,K!1,0]); 
   j:=jInvariant(E);
   R<T>:=PolynomialRing(K);
   phi_l:=ClassicalModularPolynomial(l);
@@ -68,7 +62,11 @@ Create_database:=function()
     l_primes:= [l: l in primes| l lt p];
     for l in l_primes do
         for A in [1 .. p] do
-          Set_finding(A,p,l,~Database_list);
+          try
+            Set_finding(A,p,l,~Database_list);
+          catch e 
+            "some error";
+          end try;
         end for;
     end for;
   end for;
