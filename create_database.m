@@ -62,7 +62,7 @@ Create_database:=function()
     l_primes:= [l: l in primes| l lt p];
     for l in l_primes do
         for A in [1 .. p] do
-          procedure(A,p,l,~Database_list);
+          Set_finding(A,p,l,~Database_list);
         end for;
     end for;
   end for;
