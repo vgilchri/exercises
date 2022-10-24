@@ -26,6 +26,7 @@ Set_finding:=procedure(A,p,l,~list)
     for lambda in roots_f do
       k:=Order(K0!lambda[1]);
       printf "-- k is %o\n", k;
+      printf "-- A,p is %o\n", A, p;
       K2:=GF(p^k);
       E1 := BaseExtend(E, K2);
       // E1:= EllipticCurve([0,K2!A,0,K2!1,0]);
