@@ -83,3 +83,13 @@ Create_database:=function()
   return Database_list,errors_list ;
 end function;
 
+Get_database:= procedure()
+
+  Database_list,errors_list:=Create_database();
+  Database_list_s:= Sprint(Database_list, "Magma");
+  errors_list_s:= Sprint(errors_list, "Magma");
+  
+  Write("Database_list",Database_list_s : Overwrite := true);
+  Write("errors_list",errors_list_s : Overwrite := true);
+
+end procedure,
