@@ -92,4 +92,4 @@ Get_database:= procedure()
   Write("Database_list",Database_list_s : Overwrite := true);
   Write("errors_list",errors_list_s : Overwrite := true);
 
-end procedure,
+end procedure;
