@@ -159,4 +159,79 @@ test_gauss:= function()
   return MinimalPolynomial(a);
 end function;
 
+---------------------------------------SAGE VERSION OF STEP 1--------------------------------------------------------------------------------------------
+# still testing / debugging
+
+# step 1: find a point G of order \ell
+
+# for comparison we start with the normal point-finding algo
+def point_finding(A,p,k,l,N,m):
+    # checks
+    if (l-1 % k == 0):
+        return "k ne divise pas l-1"
+    if (k > 13):
+        return "k est trop grand"
+    
+    K = GF((p,k),'x')
+    
+    # sample a random point
+    E = EllipticCurve(K,[0,A,0,1,0])
+    P_l = E(0)
+    while P_l == E(0):
+        P = E.random_point()
+        P_l = m*P
+    return P_l
+
+# computes a point evaluated at the frobenius map
+def frob_power(K,E,P,power):
+    frob = K.frobenius_endomorphism(power)
+    R = E(frob(P[0]), frob(P[1]))
+    return R
+
+# returns the image of a point P in E by the endo delta
+# delta is defined as the division of (X^k - 1) and the kth cyclotomic polynomial
+def delta(P,E,k,p):
+    R = "error, wrong k"
+    K = GF(p**k)
+    if (k in {2,3,5,7,11}):
+        R = frob_power(K,E,P,1) - P
+    elif k==4 : 
+        R = frob_power(K,E,P,2) - P
+    elif k==6 : 
+        S = frob_power(K,E,P,3) - P
+        R = frob_power(K,E,S,1) + S
+    elif k==8 : 
+        R = frob_power(K,E,P,4) - P
+    elif k==9 : 
+        R = frob_power(K,E,P,3) - P
+    elif k==10 : 
+        S = frob_power(K,E,P,5) - P
+        R = frob_power(K,E,S,1) + S
+    elif k==12 : 
+        S = frob_power(K,E,P,6) - P
+        R = frob_power(K,E,S,2) + S
+    return R
+
+# input: (montgomery coefficient A for curve E) and (order l) and (finite field p and k) and 
+# (number of points Nratio=N/N1) and (m=Nratio/l), output: (G a point of order l on E in K) 
+# assume inputs are well defined for the context
+def optimized_point_finding(A,p,k,l,Nratio,m):
+    # checks 
+    if l-1 % k == 0:
+        return "error: k ne divise pas l-1"
+    if k > 13:
+        return "error: k est trop grand"
+    
+    K = GF(p**k) # finite field of size p^k
+    
+    # sample a random point
+    E = EllipticCurve(K,[0,K(A),0,K(1),0])
+    P_l = E(0)
+    while P_l == E(0):
+        P = E.random_point()
+        P = delta(P,E,k,p)
+        P_l = m*P
+    return P_l
+    
+
 
