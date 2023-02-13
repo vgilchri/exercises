@@ -1,0 +1,116 @@
+#*****************************************************************************
+#       Algorithm for Step 2 : Computing an \ell-Isogeny
+#*****************************************************************************
+
+#####################################################
+########## Valuation of an integer n wrt 2 ##########
+#####################################################
+
+def valuation_2(n) :
+  res=0
+  while n%2==0 :
+    res+=1
+    n=n/2
+  return (res)
+
+#####################################
+########## Montgomery xADD ##########
+#####################################
+
+def xADD(xP,xQ,xR):
+    return (xP*xQ-1)^2/(xP-xQ)^2/xR
+
+#####################################
+########## Montgomery xDBL ##########
+#####################################
+
+def xDBL(x,a):
+    return (x^2-1)^2/(4*x*(x^2+a*x+1))
+
+#####################################
+############## Lemma 3 ##############
+#####################################
+
+
+def Condition_lemma3(k_prime,k_2,k_2_prime,l) :
+  b= False
+  if k_2==l-1 :
+    b=True
+  if k_2==(l-1)/2 :
+    if l%4==3 :
+      b=True
+    elif valuation_2(k_prime)==valuation_2(k_2_prime)+1 :
+      b==True
+  
+  return(b)
+
+#       Version where we get the full kernel polynomial and then evaluate
+#*****************************************************************************
+
+def get_S0_true(G,A,l,k_prime):
+  S_0=[G[0]]
+  x=G[0]
+  for i in range (1,(l-1)/2) :
+    x=xDBL(x,A)
+    S_0.append(x)
+  
+  return S_0
+
+def get_S0_T_false(G,A,l,k_prime,K,E):
+  S_0=[G[0]]
+  T=[]
+  x0=G
+  frob=K.frobenius_endomorphism()
+  x1=G
+  for i in range (k) :
+    T.append(x1[0])
+    x1=E(frob(x1[0]), frob(x1[1]))
+
+  while len(S_O) < (l-1)/2 :
+    while x0[0] in T :
+      x0=x0+G
+    x1=x0
+    S_0.append(x0[0])
+    for i in range (k) :
+    T.append(x1[0])
+    x1=E(frob(x1[0]), frob(x1[1]))
+  
+  return T, S_0
+
+#####################################
+######### Get kernel points #########
+#####################################
+
+def get_kernel_polynomial_points (p,k,G,A,l) :
+  K = GF((p,k),'x')
+  E = EllipticCurve(K,[0,A,0,1,0])
+  k_prime=k
+  q=pow(p,k)
+  if k%2==0 :
+    k_prime=k/2
+  K2=GF(l)
+  element = K2(2)
+  k_2=element.multiplicative_order()
+  k_2_prime=k_2
+  if k_2%2==0 :
+    k_2_prime=k_2/2
+  
+  if Condition_lemma3(k_prime,k_2,k_2_prime,l) :
+    S_0=get_S0_true(G,A,l,k_prime)
+    T=S_0
+    for i in range (1,k) :
+      S_0=(pow(point,q) for point in S_0)
+      for point in S_0 :
+        T.append(point)
+  
+  else :
+    T, S_0=get_S0_T_false(G,A,l,k_prime,K,E)
+  
+  return(T)
+
+  def Evaluate_from_T() :
+
+    return()
+
+#       Version where we get evaluate without computing the whole kernel polynomial
+#****************************************************************************************
