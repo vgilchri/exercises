@@ -44,6 +44,20 @@ def Condition_lemma3(k_prime,k_2,k_2_prime,l) :
   
   return(b)
 
+#####################################
+########### Lemma 3 primes ##########
+#####################################
+
+def list_primes_lemma(n):
+  list_of_fields = []
+  for l in primes(100000):
+      K = GF(l)
+      element = K.2
+      if element.multiplicative_order() == l-1:
+        list_of_fields.append(l)
+  
+  return(list_of_fields)
+
 #       Version where we get the full kernel polynomial and then evaluate
 #*****************************************************************************
 
@@ -118,6 +132,28 @@ def get_kernel_polynomial_points (p,k,G,A,l) :
 #       Version where we get evaluate without computing the whole kernel polynomial
 #****************************************************************************************
 
+def get_S0_false(G,A,l,k_prime,K,E):
+  S_0=[G]
+  lambda= get_frob_value()
+  r=1
+  T_L=[[0,0,0] for i in range (l-1)] #[b,m,n] where b is 1 if it has been encountered, m i is the Galois orbit generator, n is its frobenius powering
+  for i in range (k) :
+    power=pow(lambda,i)%l
+    T_L[power-1]=[1,0,i]
+  
+  while len(S_0)< (l-1)/k :
+    while T_L[r-1][0]==1 :
+      r+=1
+    
+    previous=S_0[T_L[r-2][1]]*(pow(lambda,T_L[r-2][2])%l)
+    previous_2=S_0[T_L[r-3][1]]*(pow(lambda,T_L[r-3][2])%l)
+    new= xADD(previous,G,previous_2)
+    S_0.append(new)
+    for i in range (k) :
+      power=pow(lambda,i)%l
+      T_L[(r*power)%l-1]=[1,r,i]
+  return(S_0)
+
 def evaluate_from_G(p,k,G,A,l,P) :
   K = GF((p,k),'x')
   E = EllipticCurve(K,[0,A,0,1,0])
@@ -150,3 +186,8 @@ def evaluate_from_G(p,k,G,A,l,P) :
   res=pow(res,power)
 
   return(res)
+
+
+#                  Get the Isogeny and image elliptic curve equation
+#****************************************************************************************
+
