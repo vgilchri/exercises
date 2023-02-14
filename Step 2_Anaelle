@@ -108,9 +108,45 @@ def get_kernel_polynomial_points (p,k,G,A,l) :
   
   return(T)
 
-  def Evaluate_from_T() :
+  def Evaluate_from_T(T,K,P) :
+    res=K.1
+    for t in T :
+      res= res*(P[0]-t)
+    return(res)
 
-    return()
 
 #       Version where we get evaluate without computing the whole kernel polynomial
 #****************************************************************************************
+
+def evaluate_from_G(p,k,G,A,l,P) :
+  K = GF((p,k),'x')
+  E = EllipticCurve(K,[0,A,0,1,0])
+  k_prime=k
+  if k%2==0 :
+    k_prime=k/2
+  K2=GF(l)
+  element = K2(2)
+  k_2=element.multiplicative_order()
+  k_2_prime=k_2
+  if k_2%2==0 :
+    k_2_prime=k_2/2
+
+  if Condition_lemma3(k_prime,k_2,k_2_prime,l) :
+    S_0=get_S0_true(G,A,l,k_prime)
+  
+  else :
+    S_0=get_S0_false() 
+  
+  res=K.1
+  for x in S_0 :
+    res=res*(P[0]-x)
+  
+  power=p
+  c=p
+  for i in range (2,k) :
+    c=c*p 
+    power=power + c
+  
+  res=pow(res,power)
+
+  return(res)
