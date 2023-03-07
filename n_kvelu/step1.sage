@@ -4,7 +4,7 @@
 
 #*****************************************************************************
 
-
+from ctool import OpCount
 
 # for comparison we start with the normal point-finding algo
 
@@ -29,6 +29,8 @@ def point_finding(A,p,l,k):
 
 def frob_power(K,E,P,power):
     frob = K.frobenius_endomorphism(power)
+    OpCount.op("frob", str(K.degree()))
+    OpCount.op("frob", str(K.degree()))
     R = E(frob(P[0]), frob(P[1]))
     return R
 
@@ -205,6 +207,6 @@ def optimized_point_finding(A,p,k,l,N, K):
         P = E.random_point()
         P = delta(P,E,k,p)
         P_l = t*P
-        
+
 
     return P_l

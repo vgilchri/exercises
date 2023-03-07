@@ -4,28 +4,28 @@ load("step1.sage")
 
 # ------ Initial part of Tests --------
 
-
+from ctool import OpCount
 
 
 #------ SAGE CODE #-------
-A = 33
-p = 37
-l = 2
-k = 1
+A = 8
+p = 31
+l = 19
+k = 3
 
 K = GF((p,k),'x')
 F.<x> = GF(p**k)
 kX.<X> = F[]
-E = EllipticCurve(K,[0,A,0,1,0])
 
 # test
 
 print("test for point finding")
 #P = point_finding(A, p, l, k)
 
+E = EllipticCurve(K,[0,A,0,1,0])
 #P = point_finding(A, p, l, k)
 #print("test for optimized point finding")
-N = get_h_k(A, p, k)
+N=get_h_k(A, p, k)
 #print(N)
 
 print("E.order(): {}".format(E.order()))
@@ -51,3 +51,5 @@ a_inv= E.a_invariants()
 ##print("Psi: {}\nPhi: {}\nOmega: {}".format(Psi, Phi, Omega))
 E_phi, new_as = build_new_curve(kX, Psi, Phi, Omega, E, P, a_inv)
 print("New EllipticCurve: {}".format(E_phi))
+
+OpCount.print_results()

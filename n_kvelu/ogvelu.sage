@@ -2,6 +2,7 @@ import sys
 import random
 from sage.schemes.elliptic_curves.ell_curve_isogeny import compute_vw_kohel_odd
 
+from ctool import OpCount
 
 def create_elliptic_curve(k):
     while True:
