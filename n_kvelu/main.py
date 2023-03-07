@@ -1,4 +1,4 @@
-from profile import OpCount
+from ctool import OpCount
 
 
 def main():
