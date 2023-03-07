@@ -8,24 +8,24 @@ load("step1.sage")
 
 
 #------ SAGE CODE #-------
-A = 20
-p = 31
-l = 7
-k = 3
+A = 33
+p = 37
+l = 2
+k = 1
 
 K = GF((p,k),'x')
 F.<x> = GF(p**k)
 kX.<X> = F[]
+E = EllipticCurve(K,[0,A,0,1,0])
 
 # test
 
 print("test for point finding")
 #P = point_finding(A, p, l, k)
-K = GF((p,k),'x')
-E = EllipticCurve(K,[0,A,0,1,0])
+
 #P = point_finding(A, p, l, k)
 #print("test for optimized point finding")
-N=get_h_k(A, p, k)
+N = get_h_k(A, p, k)
 #print(N)
 
 print("E.order(): {}".format(E.order()))

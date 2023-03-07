@@ -39,6 +39,8 @@ def frob_power(K,E,P,power):
 def delta(P,E,k,p):
     R = "error, wrong k"
     K = GF(p**k, 'x')
+    if k == 1:
+        return P
     if (k in {2,3,5,7,11}):
         R = frob_power(K,E,P,1) - P
     elif k==4 :
@@ -65,6 +67,7 @@ def get_h_k(A,p,k) :
     E = EllipticCurve(K, [0, A, 0, 1, 0])
 
     Nk = E.order()
+    N = Nk
 
     if (k in {2,3,5,7,11}) :
 
@@ -185,30 +188,23 @@ def optimized_point_finding(A,p,k,l,N, K):
     # checks
 
     if l-1 % k == 0:
-
         return "error: k ne divise pas l-1"
 
     if k > 13:
-
         return "error: k est trop grand"
-
-
-
-    #K = GF(p**k) # finite field of size p^k
-
-
-
     # sample a random point
 
     E = EllipticCurve(K, [0, A, 0, 1, 0])
 
-    P_l =E(0)
+    P_l = E(0)
+
 
     t = N//l
 
     while P_l.order() != l:
-    	P = E.random_point()
-    	P = delta(P,E,k,p)
-    	P_l = t*P
+        P = E.random_point()
+        P = delta(P,E,k,p)
+        P_l = t*P
+        
 
     return P_l
