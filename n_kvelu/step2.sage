@@ -84,14 +84,14 @@ def list_primes_lemma(n):
 
 
 def get_S0_true(G,A,l,k_prime):
-  print("G: {} \n A: {}\n l:{}\n k_prime: {}".format(G, A, l, k_prime))
+  #print("G: {} \n A: {}\n l:{}\n k_prime: {}".format(G, A, l, k_prime))
   S_0 = [G[0]]
   x = G[0]
   idx = (l-1)/(2*k_prime)
   for i in range (1,idx) :
     x = xDBL(x,A)
     S_0.append(x)
-  print("S_0:{}".format(S_0))
+  #print("S_0:{}".format(S_0))
   return S_0
 
 def get_S0_T_false(G,A,l,k_prime,K,E):
@@ -133,8 +133,6 @@ def get_kernel_polynomial_points (p,K,G,A,l, k) :
   k_2_prime = k_2
   if k_2 % 2 == 0:
     k_2_prime = k_2/2
-  print(Condition_lemma3(k_prime,k_2,k_2_prime,l))
-  print("G: {} \n A: {}\n l:{}\n k_prime: {}".format(G, A, l, k_prime))
   if Condition_lemma3(k_prime,k_2,k_2_prime,l):
     S_0 = get_S0_true(G,A,l,k_prime)
     T = copy(S_0)

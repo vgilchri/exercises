@@ -60,7 +60,7 @@ def build_new_curve(kX, Psi, Phi, Omega, E, P, a_inv):
     sageisog = E.isogeny(P)
     l = P.order()
     print("Psi: {}".format(Psi))
-    print("\n \n Kpoly: {}".format(sageisog.kernel_polynomial()(X)))
+    print("\n Kpoly: {}".format(sageisog.kernel_polynomial()(X)))
     assert sageisog.kernel_polynomial()(X) == Psi
     S = range(1,(l+1)/2)
     x = {s:(s*P)[0] for s in range(1,l)}
@@ -75,8 +75,6 @@ def build_new_curve(kX, Psi, Phi, Omega, E, P, a_inv):
     b2 = 4*a2
     b4 = 2*a4
     b6 = 4*a6
-    print("b2:{} - b4:{} - b6: {}".format(b2, b4, b6));
-    print("eb: {}".format(E.b_invariants()[:3]))
     assert E.b_invariants()[:3] == (b2,b4,b6)
 
     t = 6*(s1^2-2*s2)+b2*s1+b4*len(S)

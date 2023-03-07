@@ -207,7 +207,6 @@ def optimized_point_finding(A,p,k,l,N, K):
     t = N//l
 
     while P_l.order() != l:
-    	print("ok")
     	P = E.random_point()
     	P = delta(P,E,k,p)
     	P_l = t*P
