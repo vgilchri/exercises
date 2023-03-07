@@ -51,15 +51,14 @@ def xDBL(x,a):
 #####################################
 
 def Condition_lemma3(k_prime,k_2,k_2_prime,l) :
-  b= False
-  if k_2==l-1 :
-    b=True
+  if k_2 == l-1:
+    return True
   if k_2==(l-1)/2 :
     if l%4==3 :
-      b=True
+      return True
     elif valuation_2(k_prime)==valuation_2(k_2_prime)+1 :
-      b=True
-  return(b)
+      return True
+  return False
 
 #####################################
 
@@ -85,11 +84,14 @@ def list_primes_lemma(n):
 
 
 def get_S0_true(G,A,l,k_prime):
-  S_0=[G[0]]
-  x=G[0]
-  for i in range (1,(l-1)/(2*k_prime)) :
-    x=xDBL(x,A)
+  print("G: {} \n A: {}\n l:{}\n k_prime: {}".format(G, A, l, k_prime))
+  S_0 = [G[0]]
+  x = G[0]
+  idx = (l-1)/(2*k_prime)
+  for i in range (1,idx) :
+    x = xDBL(x,A)
     S_0.append(x)
+  print("S_0:{}".format(S_0))
   return S_0
 
 def get_S0_T_false(G,A,l,k_prime,K,E):
@@ -121,25 +123,27 @@ def get_S0_T_false(G,A,l,k_prime,K,E):
 
 def get_kernel_polynomial_points (p,K,G,A,l, k) :
   E = EllipticCurve(K,[0,A,0,1,0])
-  k_prime=p
+  k_prime = copy(k)
   q = pow(p,k)
-  if k%2==0 :
-    k_prime=k/2
-  K2=GF(l)
+  if k % 2 == 0:
+    k_prime = k/2
+  K2 = GF(l)
   element = K2(2)
-  k_2=element.multiplicative_order()
-  k_2_prime=k_2
-  if k_2%2==0 :
-    k_2_prime=k_2/2
+  k_2 = element.multiplicative_order()
+  k_2_prime = k_2
+  if k_2 % 2 == 0:
+    k_2_prime = k_2/2
   print(Condition_lemma3(k_prime,k_2,k_2_prime,l))
-  if Condition_lemma3(k_prime,k_2,k_2_prime,l) :
-    S_0=get_S0_true(G,A,l,k_prime)
-    T=copy(S_0)
+  print("G: {} \n A: {}\n l:{}\n k_prime: {}".format(G, A, l, k_prime))
+  if Condition_lemma3(k_prime,k_2,k_2_prime,l):
+    S_0 = get_S0_true(G,A,l,k_prime)
+    T = copy(S_0)
     for i in range (1,k) :
     	for j in range (len(S_0)) :
-    		T.append(pow(S_0[j],q))
+            tmp = p**i
+            T.append(pow(S_0[j],tmp))
   else :
-    T, S_0=get_S0_T_false(G,A,l,k_prime,K,E)
+    T, S_0 = get_S0_T_false(G,A,l,k_prime,K,E)
 
   return(T)
 
@@ -218,14 +222,19 @@ def evaluate_from_G(p,k,G,A,l,P):
 #****************************************************************************************
 
 def compute_rationals_bis(E, T, l, kX, k, A):
-    a1,a2,a3,a4,a6 = 0,0,0,(1/(1-(A**2/3))),(A/(3*(2*A**2/9-1))
+    a1,a2,a3,a4,a6 = 0,0,0,int(1/(1-(A**2/3))),int(A/(3*(2*A**2/9-1)))
     S = range(1,(l+1)/2)
     if l > 1:
       assert max(S) == (l-1)/2
+
+
     YY = X^3+a2*X^2+a4*X+a6
+
     YYprime = YY.diff()
+
     Psi = prod(X-t for t in T)
-    Psi = kX(Psi) # in case l=1
+
+    #Psi = kX(Psi) # in case l=1
     Psiprime = Psi.diff()
     Psiprimeprime = Psiprime.diff()
     xsum = sum(t for t in T)
