@@ -223,11 +223,9 @@ def evaluate_from_G(p,k,G,A,l,P): # Returns the evaluation at P of the Kernel po
     res=P[0]-S_0[0]
     for i in range (1,len(S_0)) : #Multiplies all generators of Galois orbits
     	res=res*(P[0]-S_0[i])
-    power=pow(p,k)
-    c=pow(p,k)
+    power=p
     for i in range (2,k) : # Frobenius powering
-    	c=c*pow(p,k)
-    	power=power + c
+    	power=power + pow(p,i)
     res=pow(res,power)
     return(res)
 
