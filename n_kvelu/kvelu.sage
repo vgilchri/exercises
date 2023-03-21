@@ -71,5 +71,6 @@ print("\t test for evaluate_from_G")
 P=E.random_point()
 result = evaluate_from_G(p,k,G,A,l,P)
 print(result)
-result2=Psi(X=P)
+result2=Psi(X=P[0])
+print(result2)
 
