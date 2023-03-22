@@ -1,4 +1,5 @@
 
+
 load("step1.sage")
 load("Costello-Hisil.sage")
 from ctool import OpCount
@@ -28,14 +29,12 @@ print(tors2)
 
 print('2-torsion point 1: ', odd_iso(kernel,[tors2[0][0],tors2[0][2]]))
 print('2-torsion point 2: ', odd_iso(kernel,[tors2[1][0],tors2[1][2]]))
-alpha = odd_iso(kernel,[tors2[0][0],tors2[0][2]])[0]
 
 # --------------------- COMPUTE OUR CODOMAIN V.S. SAGE'S ------------------
+alpha = odd_iso(kernel,[tors2[0][0],tors2[0][2]])[0]
 monty_coeff = (alpha**2 + 1 )/(-1*alpha)
 print('monty coeff should be ',monty_coeff)
 phi = E.isogeny(P)
-#their_Q = phi(Q)
-#print('their phi(Q) is ', their_Q)
 E1 = phi.codomain()
-print(E1)
+print('Sages codomain curve is ',E1)
 
