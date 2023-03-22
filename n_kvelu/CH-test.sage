@@ -1,38 +1,41 @@
 
 load("step1.sage")
 load("Costello-Hisil.sage")
+from ctool import OpCount
 
-A,p,l,k = 5, 11, 2, 1
-N = 12
+# --------------- PARAMETERS ----------------------------------------------
+A,p,l,k = 52, 131, 19, 1
+N = 152
 K = GF(p^k, 'x') # need this in order to have field consisten with point_finding()
 A = GF(p)(A)
 E = EllipticCurve(K, [0, A, 0, 1, 0])
 
+# ------------------- FIND KERNEL GENERATOR -------------------------------
 # P = optimized_point_finding(A,p,k,l,N,K)
 P = point_finding(A,p,l,k)
 print('P is ', P, 'order P is ', order(P))
 xP = [P[0], P[2]]
-kernel = kernel_points(xP, A, l)
-print('our kernel is ', kernel)
-their_kernel = []
-for i in range(1,l+1):
-	their_kernel.append(i*P)
-print('their kernel is ', their_kernel)
 
-Q = E.random_point()
-xQ = [Q[0],Q[2]]
-#print(parent(xQ), 'and ', parent(xP))
-print('Q is ', Q)
-new_Q = odd_iso(kernel, xQ)
-print('our phi(Q) is ', new_Q)
+# ------------------- COMPUTE KERNEL --------------------------------------
+kernel = kernel_points(xP, A, (l-1)/2)
 
+# -------------------- FIND 2-TORSION POINTS ------------------------------
+tors2 = []
+for P in E:
+	if order(P) == 2 and P[0] != 0:
+		tors2.append(P)
+print(tors2)
+
+print('2-torsion point 1: ', odd_iso(kernel,[tors2[0][0],tors2[0][2]]))
+print('2-torsion point 2: ', odd_iso(kernel,[tors2[1][0],tors2[1][2]]))
+alpha = odd_iso(kernel,[tors2[0][0],tors2[0][2]])[0]
+
+# --------------------- COMPUTE OUR CODOMAIN V.S. SAGE'S ------------------
+monty_coeff = (alpha**2 + 1 )/(-1*alpha)
+print('monty coeff should be ',monty_coeff)
 phi = E.isogeny(P)
-their_Q = phi(Q)
-print('their phi(Q) is ', their_Q)
+#their_Q = phi(Q)
+#print('their phi(Q) is ', their_Q)
 E1 = phi.codomain()
-
-for R in E1:
-	print(R, ' has order ', order(R))
-
-
+print(E1)
 
