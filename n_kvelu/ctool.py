@@ -16,6 +16,7 @@ class OpCount(object):
 
     @staticmethod
     def clean():
+        del OpCount.field_op
         OpCount.field_op = {}
 
     @staticmethod
