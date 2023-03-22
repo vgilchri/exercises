@@ -15,6 +15,10 @@ class OpCount(object):
         return OpCount.__instance
 
     @staticmethod
+    def clean():
+        OpCount.field_op = {}
+
+    @staticmethod
     def op(operation, field=None):
         if field == None:
             field = "1"
