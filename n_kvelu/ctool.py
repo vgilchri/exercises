@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 class OpCount(object):
     nr_add = 0
     nr_mult = 0
@@ -44,3 +45,13 @@ class OpCount(object):
             for op in OpCount.field_op[k]:
                 print("\t op: {} - nr: {}".format(op, OpCount.field_op[k][op]))
         print("---------------------------------------------")
+
+
+    @staticmethod
+    def plot():
+        for k in OpCount.field_op:
+            names = list(OpCount.field_op[k].keys())
+            values = list(OpCount.field_op[k].values())
+            plt.bar(range(len(OpCount.field_op[k])), values, tick_label=names)
+            file_name = "Field_" + str(k) + ".png"
+            plt.savefig(file_name)
