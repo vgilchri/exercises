@@ -51,9 +51,12 @@ class OpCount(object):
     def plot(file_name):
         print(OpCount.field_op)
         for k in OpCount.field_op:
+            fig = plt.figure()
+            ax = fig.add_subplot(111)
+            ax.set_ylabel('Number of Operations', fontsize=12)
             names = list(OpCount.field_op[k].keys())
             values = list(OpCount.field_op[k].values())
             plt.bar(range(len(OpCount.field_op[k])), values, tick_label=names)
             file_name = file_name + "_" + str(k) + ".png"
             plt.savefig(file_name)
-            plt.cla() 
+            plt.cla()
