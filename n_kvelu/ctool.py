@@ -49,9 +49,11 @@ class OpCount(object):
 
     @staticmethod
     def plot(file_name):
+        print(OpCount.field_op)
         for k in OpCount.field_op:
             names = list(OpCount.field_op[k].keys())
             values = list(OpCount.field_op[k].values())
             plt.bar(range(len(OpCount.field_op[k])), values, tick_label=names)
             file_name = file_name + "_" + str(k) + ".png"
             plt.savefig(file_name)
+            plt.cla() 
