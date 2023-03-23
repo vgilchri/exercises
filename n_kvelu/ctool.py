@@ -54,6 +54,7 @@ class OpCount(object):
             fig = plt.figure()
             ax = fig.add_subplot(111)
             ax.set_ylabel('Number of Operations', fontsize=12)
+            ax.set_xlabel('Finite Field Operations', fontsize=12)
             names = list(OpCount.field_op[k].keys())
             values = list(OpCount.field_op[k].values())
             plt.bar(range(len(OpCount.field_op[k])), values, tick_label=names)
