@@ -189,6 +189,8 @@ def get_S0_T_false(G,A,l,k_prime,K,E): # Returns S0 and T when lemma 3 does not 
   for i in range (k) : # generates Galois orbit from a generator
     T.append(x1[0])
     x1=E(frob(x1[0]), frob(x1[1]))
+    OpCount.op("frob", str(K.degree()))
+    OpCount.op("frob", str(K.degree()))
   while len(S_O) < (l-1)/2 :
     while x0[0] in T : #Find next generator 
       x0=x0+G
@@ -198,6 +200,8 @@ def get_S0_T_false(G,A,l,k_prime,K,E): # Returns S0 and T when lemma 3 does not 
     for i in range (k) : # generates Galois orbit from a generator
         T.append(x1[0])
         x1=E(frob(x1[0]), frob(x1[1]))
+        OpCount.op("frob", str(K.degree()))
+        OpCount.op("frob", str(K.degree()))
   return T, S_0
 
 #####################################
