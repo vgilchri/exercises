@@ -14,6 +14,7 @@ l = 19
 k = 3
 
 K = GF((p,k),'x')
+
 K0=GF(p,'x')
 F.<x> = GF(p**k)
 kX.<X> = F[]
@@ -23,26 +24,26 @@ kX.<X> = F[]
 print("test for point finding")
 #P = point_finding(A, p, l, k)
 
-E = EllipticCurve(K,[0,A,0,1,0])
-E0 = EllipticCurve(K0,[0,A,0,1,0])
+E = EllipticCurve(K,[0,K(A),0,1,0])
+E0 = EllipticCurve(K0,[0,K(A),0,1,0])
 #P = point_finding(A, p, l, k)
 #print("test for optimized point finding")
 N=get_h_k(A, p, k)
 #print(N)
 
 print("E.order(): {}".format(E.order()))
-G = optimized_point_finding(A, p, k,l, N, K)
+G = optimized_point_finding(K(A), p, k,l, N, K)
 print("G:{} - order: {}".format(G, G.order()))
 #print(E.cardinality()/5)
 #print("Print G: {}".format(G))
 #print(G.order())
 
 print("\t test for get_kernel_polynomial_points")
-T = get_kernel_polynomial_points(p,K,G,A,l,k)
+T = get_kernel_polynomial_points(p,K,G,K(A),l,k)
 #print("res get_kernel_polynomial_points: {}".format(T))
 
 print("\t Start Rationals : compute_rationals_bis \t")
-Psi, Phi, Omega = compute_rationals_bis(E, T, l, kX, k, A)
+Psi, Phi, Omega = compute_rationals_bis(E, T, l, kX, K, k, K(A))
 #print("Psi: {}\nPhi: {}\nOmega: {}".format(Psi, Phi, Omega))
 #print("G: {} - order {}".format(G, G.order()))
 
@@ -50,7 +51,7 @@ Psi, Phi, Omega = compute_rationals_bis(E, T, l, kX, k, A)
 a_inv= E.a_invariants()
 
 
-#Psi, Phi, Omega = compute_rationals(E, G, kX, k, a_inv)
+#Psi, Phi, Omega = compute_rationals(E, G, kX, K, k, a_inv)
 ##print("Psi: {}\nPhi: {}\nOmega: {}".format(Psi, Phi, Omega))
 E_phi, new_as = build_new_curve(kX, Psi, Phi, Omega, E, G, a_inv)
 print("New EllipticCurve: {}".format(E_phi))
@@ -61,16 +62,16 @@ OpCount.print_results()
 print("\t test for lemma")
 list_of_fields = []
 for l1 in primes(100000):
-    K = GF(l)
-    element = K(2)
+    Kl = GF(l)
+    element = Kl(2)
 if (element.multiplicative_order() != l1-1) and (element.multiplicative_order() != l1-1/2):
     list_of_fields.append(l1)
 print (list_of_fields)
 
+
 print("\t test for evaluate_from_G")
 P=E0.random_point()
-print(P)
-result = evaluate_from_G(p,k,G,A,l,P)
+result = evaluate_from_G(p,k,G,K(A),l,P)
 print(result)
 result2=Psi(X=P[0])
 print(result2)
