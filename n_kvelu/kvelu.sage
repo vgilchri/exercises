@@ -1,3 +1,4 @@
+COUNT_ALL = 0
 load("ogvelu.sage")
 load("step2.sage")
 load("step1.sage")
@@ -75,4 +76,7 @@ result = evaluate_from_G(p,k,G,K(A),l,P)
 print(result)
 result2=Psi(X=P[0])
 print(result2)
+
+
+
 

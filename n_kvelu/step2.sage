@@ -35,32 +35,37 @@ def valuation_2(n) :
 
 def xADD(P,Q,R):
 	# montgomery xADD
-	xP,zP = P
-	xQ,zQ = Q
-	xR,zR = R
-	U = (xP-zP)*(xQ+zQ)
-	OpCount.op("add", str(k))
-	OpCount.op("add", str(k))
-	OpCount.op("mult", str(k))
-	V = (xP+zP)*(xQ-zQ)
-	OpCount.op("add", str(k))
-	OpCount.op("add", str(k))
-	OpCount.op("mult", str(k))
-	res1 = zR*((U+V)**2)
-	OpCount.op("square", str(k))
-	OpCount.op("add", str(k))
-	OpCount.op("mult", str(k))
-	res2 = xR*((U-V)**2)
-	OpCount.op("square", str(k))
-	OpCount.op("add", str(k))
-	OpCount.op("mult", str(k))
-	if res2 == 0:
-		res1 = 1
-		res2 = 0 
-	else:
-		res1 = res1/res2
-		res2 = 1
-	return [res1, res2]
+    OpCount.op("xADD", str(k))
+    xP,zP = P
+    xQ,zQ = Q
+    xR,zR = R
+    U = (xP-zP)*(xQ+zQ)
+    if COUNT_ALL:
+        OpCount.op("add", str(k))
+        OpCount.op("add", str(k))
+        OpCount.op("mult", str(k))
+        V = (xP+zP)*(xQ-zQ)
+    if COUNT_ALL:
+        OpCount.op("add", str(k))
+        OpCount.op("add", str(k))
+        OpCount.op("mult", str(k))
+    res1 = zR*((U+V)**2)
+    if COUNT_ALL:
+        OpCount.op("square", str(k))
+        OpCount.op("add", str(k))
+        OpCount.op("mult", str(k))
+        res2 = xR*((U-V)**2)
+    if COUNT_ALL:
+        OpCount.op("square", str(k))
+        OpCount.op("add", str(k))
+        OpCount.op("mult", str(k))
+    if res2 == 0:
+        res1 = 1
+        res2 = 0
+    else:
+        res1 = res1/res2
+        res2 = 1
+    return [res1, res2]
 
 
 #####################################
@@ -72,23 +77,24 @@ def xADD(P,Q,R):
 
 
 def xDBL(x,a):
-
-    OpCount.op("mult", str(k))
-    OpCount.op("mult", str(k))
-    OpCount.op("mult", str(k))
-    OpCount.op("add", str(k))
-    OpCount.op("add", str(k))
-    OpCount.op("add", str(k))
-    OpCount.op("div", str(k))
-    OpCount.op("square", str(k))
-    OpCount.op("square", str(k))
-    OpCount.op("square", str(k))
+    if COUNT_ALL:
+        OpCount.op("mult", str(k))
+        OpCount.op("mult", str(k))
+        OpCount.op("mult", str(k))
+        OpCount.op("add", str(k))
+        OpCount.op("add", str(k))
+        OpCount.op("add", str(k))
+        OpCount.op("div", str(k))
+        OpCount.op("square", str(k))
+        OpCount.op("square", str(k))
+        OpCount.op("square", str(k))
+    OpCount.op("xDBL", str(k))
     return (x^2-1)^2/(4*x*(x^2+a*x+1))
-    
-    
+
+
 
 #def xDBL(P,A):
-#	# montgomery xDBL 
+#	# montgomery xDBL
 #	xP,zP = P
 #	R = (xP+zP)**2
 #	S = (xP-zP)**2
@@ -107,7 +113,7 @@ def xDBL(x,a):
 #	OpCount.op("square", str(k))
 #	if r2 == 0:
 #		r1 = 1
-#		r2 = 0 
+#		r2 = 0
 #	else:
 #		r1 = r1/r2
 #		r2 = 1
@@ -166,13 +172,14 @@ def list_primes_lemma(n):
 def get_S0_true(Gx,A,l,k_prime): # Returns S0 when lemma 3 applies
 
   #print("G: {} \n A: {}\n l:{}\n k_prime: {}".format(G, A, l, k_prime))
-  
+
   S_0 = [Gx] #Initialize S_0 with our first generator of Galois orbit
   x = Gx
   idx = (l-1)/(2*k_prime) # number of Galois orbits
-  OpCount.op("mult", str(k))
-  OpCount.op("add", str(k))
-  OpCount.op("div", str(k))
+  if COUNT_ALL:
+      OpCount.op("mult", str(k))
+      OpCount.op("add", str(k))
+      OpCount.op("div", str(k))
   for i in range (1,idx) :
     x = xDBL(x,A)
     S_0.append(x)
@@ -192,7 +199,7 @@ def get_S0_T_false(G,A,l,k_prime,K,E): # Returns S0 and T when lemma 3 does not 
     OpCount.op("frob", str(K.degree()))
     OpCount.op("frob", str(K.degree()))
   while len(S_O) < (l-1)/2 :
-    while x0[0] in T : #Find next generator 
+    while x0[0] in T : #Find next generator
       x0=x0+G
       OpCount.op("add", str(k))
     x1=x0
@@ -218,11 +225,13 @@ def get_kernel_polynomial_points (p,K,G,A,l, k) : # Return T using the functions
   q = pow(p,k)
   lg = int(log(k,2))
   for i in range (abs(lg)) :
-  	OpCount.op("square", str(k))
+      if COUNT_ALL:
+          OpCount.op("square", str(k))
   Gx=G[0]
   if k % 2 == 0:
     k_prime = k/2
-    OpCount.op("div", str(k))
+    if COUNT_ALL:
+        OpCount.op("div", str(k))
     K_even=GF((p,k_prime),'x')
     Gx=K_even(Gx)
     A= K_even(A)
@@ -232,7 +241,8 @@ def get_kernel_polynomial_points (p,K,G,A,l, k) : # Return T using the functions
   k_2_prime = k_2
   if k_2 % 2 == 0:
     k_2_prime = k_2/2
-    OpCount.op("div", str(k))
+    if COUNT_ALL:
+        OpCount.op("div", str(k))
   #print("k_prime: {}\nk_2: {}\nk_2_prime: {}\nl: {}".format(k_prime,k_2,k_2_prime,l))
   if Condition_lemma3(k_prime,k_2,k_2_prime,l):
     #print("lemma yes")
@@ -242,10 +252,12 @@ def get_kernel_polynomial_points (p,K,G,A,l, k) : # Return T using the functions
     	for j in range (len(S_0)) :
             tmp = pow(p,i)
             for m in range (abs(int(log(i,2)))):
-            	OpCount.op("square", str(k))
+                if COUNT_ALL:
+                    OpCount.op("square", str(k))
             T.append(pow(S_0[j],tmp))
             for m in range (abs(int(log(tmp,2)))):
-            	OpCount.op("square", str(k))
+                if COUNT_ALL:
+                    OpCount.op("square", str(k))
   else :
   	#print("lemma no")
   	if k % 2 == 0:
@@ -283,48 +295,55 @@ def get_S0_false(G,A,l,k_prime,K,E):
   for i in range (k) : # We check all points in Galois orbit generated by G
     power=pow(lam,i)%l
     for m in range (abs(int(log(i,2)))):
-            	OpCount.op("square", str(k))
+        if COUNT_ALL:
+            OpCount.op("square", str(k))
     T_L[power-1]=[1,0,i]
   while len(S_0)< (l-1)/k : # While we haven't found all generators
     while T_L[r-1][0]==1 : # We look for the smallest multiple of G which is not in any Galois orbit previously calculated
       r+=1
-      OpCount.op("add", str(k))
+      if COUNT_ALL:
+          OpCount.op("add", str(k))
     previous=S_0[T_L[r-2][1]]*(pow(lam,T_L[r-2][2])%l)
     previous_2=S_0[T_L[r-3][1]]*(pow(lam,T_L[r-3][2])%l)
-    OpCount.op("mult", str(k))
-    OpCount.op("mult", str(k))
+    if COUNT_ALL:
+        OpCount.op("mult", str(k))
+        OpCount.op("mult", str(k))
     new= xADD(previous,G,previous_2)
     S_0.append(new)
     for i in range (k) : # Check all points in the newly generated Galois orbit
       power=pow(lam,i)%l
       for m in range (abs(int(log(i,2)))):
-            	OpCount.op("square", str(k))
+          if COUNT_ALL:
+              OpCount.op("square", str(k))
       T_L[(r*power)%l-1]=[1,r,i]
-      OpCount.op("mult", str(k))
-      OpCount.op("add", str(k))
+      if COUNT_ALL:
+          OpCount.op("mult", str(k))
+          OpCount.op("add", str(k))
     return(S_0)
 
 
 
-def evaluate_from_G(p,k,G,A,l,P): # Returns the evaluation at P of the Kernel polynomial generated by G 
-    
+def evaluate_from_G(p,k,G,A,l,P): # Returns the evaluation at P of the Kernel polynomial generated by G
+
     Gx=G[0]
     Px=P[0]
     k_prime = copy(k)
     if k % 2 == 0:
-    	k_prime = k/2
-    	OpCount.op("div", str(k))
-    	K_even = GF((p,k_prime),'x')
-    	Gx =K_even(Gx)
-    	Px=K_even(Px)
-    	A = K_even(A)
+        k_prime = k/2
+        if COUNT_ALL:
+            OpCount.op("div", str(k))
+        K_even = GF((p,k_prime),'x')
+        Gx =K_even(Gx)
+        Px=K_even(Px)
+        A = K_even(A)
     K2 = GF(l)
     element = K2(2)
     k_2 = element.multiplicative_order()
     k_2_prime = k_2
     if k_2 % 2 == 0:
-    	k_2_prime = k_2/2
-    	OpCount.op("div", str(k))	
+        k_2_prime = k_2/2
+        if COUNT_ALL:
+            OpCount.op("div", str(k))
     #print("k_prime: {}\nk_2: {}\nk_2_prime: {}\nl: {}".format(k_prime,k_2,k_2_prime,l))
     if Condition_lemma3(k_prime,k_2,k_2_prime,l): #Checks if lemma 3 applies or not
     	#print("lemma yes")
@@ -338,22 +357,27 @@ def evaluate_from_G(p,k,G,A,l,P): # Returns the evaluation at P of the Kernel po
     		S_0=get_S0_false(G,A,l,k_prime,K,E)
     print("S_O:",S_0)
     res=Px-S_0[0]
-    OpCount.op("add", str(k))
+    if COUNT_ALL:
+        OpCount.op("add", str(k))
     for i in range (1,len(S_0)) : #Multiplies all generators of Galois orbits
-    	res=res*(Px-S_0[i])
-    	OpCount.op("mult", str(k))
-    	OpCount.op("add", str(k))
+        res=res*(Px-S_0[i])
+        if COUNT_ALL:
+            OpCount.op("mult", str(k))
+            OpCount.op("add", str(k))
     power=1
     for i in range (1,k) : # Frobenius powering
-    	power=power + pow(p,i)
-    	OpCount.op("add", str(k))
-    	for m in range (abs(int(log(i,2)))):
-            	OpCount.op("square", str(k))
-    	
+        power=power + pow(p,i)
+        if COUNT_ALL:
+            OpCount.op("add", str(k))
+        for m in range (abs(int(log(i,2)))):
+            if COUNT_ALL:
+                OpCount.op("square", str(k))
+
     res=pow(res,power)
-    
+
     for m in range (abs(int(log(power,2)))):
-            	OpCount.op("square", str(k))
+        if COUNT_ALL:
+            OpCount.op("square", str(k))
     res= K(res)
     #print("so we have same ?",(P[0]-S_0[0])**(p**(k-1)),P[0]-S_0[0]**(p**(k-1)))
     return(res)
@@ -381,10 +405,8 @@ def compute_rationals_bis(E, T, l, kX, K, k, A): # Compute the rationnals functi
     Psiprimeprime = Psiprime.diff()
     xsum = sum(K(t) for t in T)
     Phi = 4*YY*(Psiprime^2-Psiprimeprime*Psi)-2*YYprime*Psiprime*Psi+(l*X-xsum)*Psi^2
-    
+
     assert Phi == 4*(X^3+a2*X^2+a4*X+a6)*(Psiprime^2-Psiprimeprime*Psi)-2*(3*X^2+2*a2*X+a4)*Psiprime*Psi+(l*X-xsum)*Psi^2
     Phiprime = Phi.diff()
     Omega = Phiprime*Psi-2*Phi*Psiprime
     return Psi, Phi, Omega
-    
-    
