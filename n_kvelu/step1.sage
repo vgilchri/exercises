@@ -203,10 +203,12 @@ def optimized_point_finding(A,p,k,l,N, K):
 
     t = N//l
 
+
     while P_l.order() != l:
         P = E.random_point()
         P = delta(P,E,k,p)
         P_l = t*P
+        OpCount.op("mult", str(k))
 
 
     return P_l
