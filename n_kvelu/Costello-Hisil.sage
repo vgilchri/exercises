@@ -1,10 +1,10 @@
-# here we implement the Costello-Hisil algorithm 
+# here we implement the Costello-Hisil algorithm
 # eprint https://eprint.iacr.org/2017/504.pdf
 # for computing odd degree isogenies
 from ctool import OpCount
 # we count xADD's, xDBL's, add's, mult's, div's, square's
 
-def xADD(P,Q,R):
+def xADD_ch(P,Q,R):
 	# montgomery xADD
 	xP,zP = P
 	xQ,zQ = Q
@@ -27,15 +27,15 @@ def xADD(P,Q,R):
 	OpCount.op("mult", str(k))
 	if res2 == 0:
 		res1 = 1
-		res2 = 0 
+		res2 = 0
 	else:
 		res1 = res1/res2
 		res2 = 1
 	return [res1, res2]
 
 
-def xDBL(P,A):
-	# montgomery xDBL 
+def xDBL_ch(P,A):
+	# montgomery xDBL
 	xP,zP = P
 	R = (xP+zP)**2
 	S = (xP-zP)**2
@@ -54,7 +54,7 @@ def xDBL(P,A):
 	OpCount.op("square", str(k))
 	if r2 == 0:
 		r1 = 1
-		r2 = 0 
+		r2 = 0
 	else:
 		r1 = r1/r2
 		r2 = 1
@@ -72,16 +72,16 @@ def criss_cross(a,b,c,d):
 	OpCount.op("add", str(k))
 	return (t1+t2, t1-t2)
 
-def kernel_points(P, A, d): 
+def kernel_points(P, A, d):
 	# alg 2, p. 11
 	# given a generator of the kernel, P, and the montgomery curve constant of the domain curve,
 	# returns the first d multiples of P
 	kernel = [P]
 	K = parent(A)
 	if d >= 2:
-		kernel.append(xDBL(P,A))
+		kernel.append(xDBL_ch(P,A))
 		for i in range(2,d):
-			temp = xADD(kernel[i-1],P,kernel[i-2])
+			temp = xADD_ch(kernel[i-1],P,kernel[i-2])
 			kernel.append(temp)
 	# if d==2, then kernel will have two elts: P which is added at the start, and infinity which is added at the end
 	return kernel
@@ -111,7 +111,7 @@ def odd_iso(kernel,Q):
 	OpCount.op("square", str(k))
 	if res2 == 0:
 		res1 = 1
-		res2 = 0 
+		res2 = 0
 	else:
 		res1 = res1/res2
 		res2 = 1
@@ -121,6 +121,3 @@ def simultaneous_odd_iso():
 	# given a set of points, and a kernel generator P, and a montgomery coefficient,
 	# returns the isogeny with kernel <P> evaluated at the input points
 	return 1
-
-
-
