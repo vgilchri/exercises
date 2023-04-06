@@ -1,4 +1,4 @@
-
+COUNT_ALL = 0
 load("step1.sage")
 load("Costello-Hisil.sage")
 load("step2.sage")
@@ -14,16 +14,16 @@ Q = E.random_point()
 
 # ------------------- FIND KERNEL GENERATOR -------------------------------
 # P = optimized_point_finding(A,p,k,l,N,K)
-OpCount.clean() 
+OpCount.clean()
 P = point_finding(A,p,l,k)
 print('P is ', P, 'order P is ', order(P))
 xP = [P[0], P[2]]
 
 # ------------------- COMPUTE COSTELLO-HISIL --------------------------------------
-OpCount.clean() 
+OpCount.clean()
 kernel = kernel_points(xP, A, (l-1)/2)
 ch_iso = odd_iso(kernel,Q)
 
 # ---------------------	RUN OUR ALGO ----------------------------------------
-OpCount.clean() 
+OpCount.clean()
 our_iso = evaluate_from_G(p,k,P,A,l,Q)
