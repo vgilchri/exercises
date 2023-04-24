@@ -1,0 +1,38 @@
+[* [* 3, 7, 3, 1,
+EllipticCurve([GF(7)|0, 3, 0, 1, 0]),
+2, 12, EllipticCurve([GF(7)|0, 3, 0, 1, 0])(GF(7))![4, 2, 1],
+EllipticCurve([GF(7)|0, 3, 0, 6, 5]),
+(m where _,m is IsIsogenous(EllipticCurve([GF(7)|0, 3, 0, 1, 0]), 
+EllipticCurve([GF(7)|0, 3, 0, 6, 5]))),
+SubgroupScheme(EllipticCurve([GF(7)|0, 3, 0, 1, 0]), x + 3)
+*], [* 4, 7, 3, 2,
+EllipticCurve([GF(7)|0, 4, 0, 1, 0]),
+2, 4, EllipticCurve([GF(7, 2)|0, 4, 0, 1, 0])(GF(7, 2))![3, $.1^28, 1],
+EllipticCurve([GF(7)|0, 4, 0, 6, 2]),
+(m where _,m is IsIsogenous(EllipticCurve([GF(7)|0, 4, 0, 1, 0]), 
+EllipticCurve([GF(7)|0, 4, 0, 6, 2]))),
+SubgroupScheme(EllipticCurve([GF(7)|0, 4, 0, 1, 0]), x + 4)
+*], [* 15, 23, 17, 16,
+EllipticCurve([GF(23)|0, 15, 0, 1, 0]),
+2, 28, EllipticCurve([GF(23, 16)|Polynomial(GF(23), \[]), Polynomial(GF(23), 
+\[15]), Polynomial(GF(23), \[]), Polynomial(GF(23), \[1]), Polynomial(GF(23), 
+\[])])(GF(23, 16))![Polynomial(GF(23), \[20, 12, 21, 13, 4, 9, 7, 5, 1, 20, 11, 
+10, 16, 12, 15, 12]), Polynomial(GF(23), \[6, 3, 1, 22, 8, 8, 7, 13, 11, 14, 15,
+2, 3, 11, 4, 14]), Polynomial(GF(23), \[1])],
+EllipticCurve([GF(23)|0, 15, 0, 7, 16]),
+(m where _,m is IsIsogenous(EllipticCurve([GF(23)|0, 15, 0, 1, 0]), 
+EllipticCurve([GF(23)|0, 15, 0, 7, 16]))),
+SubgroupScheme(EllipticCurve([GF(23)|0, 15, 0, 1, 0]), x^8 + 4*x^7 + 4*x^6 + 
+21*x^5 + 12*x^4 + x^3 + 4*x^2 + 19*x + 17)
+*], [* 15, 23, 17, 8,
+EllipticCurve([GF(23)|0, 15, 0, 1, 0]),
+2, 28, EllipticCurve([GF(23, 8)|Polynomial(GF(23), \[]), Polynomial(GF(23), 
+\[15]), Polynomial(GF(23), \[]), Polynomial(GF(23), \[1]), Polynomial(GF(23), 
+\[])])(GF(23, 8))![Polynomial(GF(23), \[18, 21, 14, 9, 11, 14, 17, 16]), 
+Polynomial(GF(23), \[20, 1, 1, 4, 4, 10, 21]), Polynomial(GF(23), \[1])],
+EllipticCurve([GF(23)|0, 15, 0, 0, 1]),
+(m where _,m is IsIsogenous(EllipticCurve([GF(23)|0, 15, 0, 1, 0]), 
+EllipticCurve([GF(23)|0, 15, 0, 0, 1]))),
+SubgroupScheme(EllipticCurve([GF(23)|0, 15, 0, 1, 0]), x^8 + 4*x^7 + 15*x^6 + 
+3*x^4 + 14*x^3 + 13*x^2 + 18*x + 6)
+*] *]
