@@ -33,5 +33,9 @@ for e in match:
         param = get_parameters(new_str)
         parameters.append(param)
 
+to_save = open("params.txt", "w")
 for param in parameters:
+    str_f = str(param)+"\n"
+    to_save.write(str_f)
     print(param)
+to_save.close()
