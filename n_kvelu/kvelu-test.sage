@@ -19,13 +19,13 @@ filename = "params.txt"
 
 for line in open(filename, 'r'):
     line = line.split(',')
-    A = int(line[0].replace("(", ""))
-    p = int(line[1])
-    l = int(line[2])
-    k = int(line[3])
-    j_inv = int(line[4])
-    ratio = int(line[5].replace(")", ""))
+    k = int(line[0].replace("[", ""))
+    A = int(line[1])
+    p = int(line[2])
+    l = int(line[3].replace("]", ""))
+
     if k%2 != 0 and k < 12:
+        print("A, p, l, k, : {} {} {} {} ".format(A, p, l, k))
         K = GF(p^k, 'x') # need this in order to have field consisten with point_finding()
         A = GF(p)(A)
         E = EllipticCurve(K, [0, A, 0, 1, 0])
@@ -34,4 +34,4 @@ for line in open(filename, 'r'):
         P = point_finding(A,p,l,k)
         OpCount.clean()
         our_iso = evaluate_from_G(p,k,P,A,l,Q)
-        print("A, p, l, k, j_inv, ratio, Q, iso: {} {} {} {} {} {} {} {}".format(A, p, l, k, j_inv, ratio, Q, our_iso))
+        print("A, p, l, k, Q, iso: {} {} {} {} {} {}".format(A, p, l, k, Q, our_iso))
