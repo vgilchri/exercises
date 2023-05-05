@@ -25,13 +25,26 @@ for line in open(filename, 'r'):
     l = int(line[3].replace("]", ""))
 
     if k%2 != 0 and k < 12:
-        print("A, p, l, k, : {} {} {} {} ".format(A, p, l, k))
-        K = GF(p^k, 'x') # need this in order to have field consisten with point_finding()
-        A = GF(p)(A)
-        E = EllipticCurve(K, [0, A, 0, 1, 0])
-        Q = E.random_point()
+        try:
+            k_prime = copy(k)
+            if k % 2 == 0:
+              k_prime = k/2
+            K2 = GF(l)
+            element = K2(2)
+            k_2 = element.multiplicative_order()
+            k_2_prime = k_2
+            if k_2 % 2 == 0:
+              k_2_prime = k_2/2
+            if Condition_lemma3(k_prime,k_2,k_2_prime,l):
+                print("A, p, l, k, : {} {} {} {} ".format(A, p, l, k))
+                K = GF(p^k, 'x') # need this in order to have field consisten with point_finding()
+                A = GF(p)(A)
+                E = EllipticCurve(K, [0, A, 0, 1, 0])
+                Q = E.random_point()
 
-        P = point_finding(A,p,l,k)
-        OpCount.clean()
-        our_iso = evaluate_from_G(p,k,P,A,l,Q)
-        print("A, p, l, k, Q, iso: {} {} {} {} {} {}".format(A, p, l, k, Q, our_iso))
+                P = point_finding(A,p,l,k)
+                OpCount.clean()
+                our_iso = evaluate_from_G(p,k,P,A,l,Q)
+                print("A, p, l, k, Q, iso: {} {} {} {} {} {}".format(A, p, l, k, Q, our_iso))
+        except:
+            pass
