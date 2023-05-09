@@ -194,13 +194,15 @@ def optimized_point_finding(A,p,k,l,N, K):
 
     if k > 13:
         return "error: k est trop grand"
+
+
     # sample a random point
 
     E = EllipticCurve(K, [0, A, 0, 1, 0])
 
     P_l = E(0)
 
-
+    
     t = N//l
 
 
