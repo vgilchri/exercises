@@ -37,15 +37,6 @@ for line in open(filename, 'r'):
              k_2_prime = k_2/2
         if Condition_lemma3(k_prime,k_2,k_2_prime,l): #TODO: Rerun when the condition lema is false
             print("A, p, l, k, : {} {} {} {} ".format(A, p, l, k))
-            N = get_h_k(A,p,k)
-            print("Ratio: {}".format(N))
-            fact = factor(N)
-            not_cofact = True
-            for f in list(fact):
-                if l in f:
-                    if f[1] > 1:
-                        not_cofact = False
-            if not_cofact:
                 K = GF(p^k, 'x') # need this in order to have field consisten with point_finding()
                 A = GF(p)(A)
                 E = EllipticCurve(K, [0, A, 0, 1, 0])
@@ -53,7 +44,7 @@ for line in open(filename, 'r'):
                 print("start finding point...")
                 #G = point_finding(A,p,l,k)
 
-                G = optimized_point_finding(A,p,k,l,N,K)
+                G = optimized_point_finding(A,p,k,l,K)
                 print("finish finding point...")
                 OpCount.clean()
                 our_iso = evaluate_from_G(p,k,G,A,l,Q)
