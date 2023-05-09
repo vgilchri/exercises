@@ -185,7 +185,7 @@ def get_h_k(A,p,k) :
 
 # assume inputs are well defined for the context
 
-def optimized_point_finding(A,p,k,l,N, K):
+def optimized_point_finding(A,p,k,l, K):
 
     # checks
 
@@ -202,8 +202,12 @@ def optimized_point_finding(A,p,k,l,N, K):
 
     P_l = E(0)
 
-    
-    t = N//l
+    # we want N = expo(#E) / #H instead of N = #E / #H
+    N = get_h_k(A,p,k)
+    if N % l**2 eq 0:
+        t = N // l**2
+    else:
+        t = N//l
 
 
     while P_l.order() != l:
