@@ -204,7 +204,7 @@ def optimized_point_finding(A,p,k,l, K):
 
     # we want N = expo(#E) / #H instead of N = #E / #H
     N = get_h_k(A,p,k)
-    if N % l**2 eq 0:
+    if N % l**2 == 0:
         t = N // l**2
     else:
         t = N//l
