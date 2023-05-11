@@ -19,7 +19,12 @@ def point_finding(A,p,l,k):
     # sample a random point
     E = EllipticCurve(K, [0, A, 0, 1, 0])
     P_l =E.random_point()
-    t = E.order()//l
+    N = E.order()
+    if N % l**2 == 0:
+        t = N // l**2
+    else:
+        t = N//l
+
     while P_l.order() != l:
         P = E.random_point()
         P_l = t*P
