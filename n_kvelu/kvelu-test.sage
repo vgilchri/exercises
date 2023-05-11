@@ -2,6 +2,7 @@ COUNT_ALL = 1
 load("step1.sage")
 load("step2.sage")
 from ctool import OpCount
+from database_sql import Database_iso
 
 # --------------- PARAMETERS ----------------------------------------------
 A,p,l,k = 52, 131, 19, 1
@@ -23,6 +24,8 @@ for line in open(filename, 'r'):
     A = int(line[1])
     p = int(line[2])
     l = int(line[3].replace("]", ""))
+
+    Database_iso.create_database("tmp.db")
 
     if k%2 != 0 and k < 12 and l > 2:
         #print("A, p, l, k, : {} {} {} {} ".format(A, p, l, k))
@@ -47,4 +50,9 @@ for line in open(filename, 'r'):
             print("finish finding point...")
             OpCount.clean()
             our_iso = evaluate_from_G(p,k,G,A,l,Q)
+            print(OpCount.field_op)
+            str_iso_ = "G: " + str(G) +" P: "+ str(Q) +  ": iso = " + str(our_iso)
+            dba = Database_iso(p, k, l, OpCount.field_op[str(k)], str_iso_, A, "tmp.db")
+            dba.insert()
+            OpCount.clean()
             print("A, p, l, k, Q, iso: {} {} {} {} {} {}".format(A, p, l, k, Q, our_iso))
