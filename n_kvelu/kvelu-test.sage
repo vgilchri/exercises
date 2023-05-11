@@ -25,7 +25,8 @@ for line in open(filename, 'r'):
     p = int(line[2])
     l = int(line[3].replace("]", ""))
 
-    Database_iso.create_database("tmp.db")
+    db_name = "tmp2.db"
+    Database_iso.create_database(db_name)
 
     if k%2 != 0 and k < 12 and l > 2:
         #print("A, p, l, k, : {} {} {} {} ".format(A, p, l, k))
@@ -48,11 +49,9 @@ for line in open(filename, 'r'):
             #G = point_finding(A,p,l,k)
             G = optimized_point_finding(A,p,k,l,K)
             print("finish finding point...")
-            OpCount.clean()
             our_iso = evaluate_from_G(p,k,G,A,l,Q)
-            print(OpCount.field_op)
             str_iso_ = "G: " + str(G) +" P: "+ str(Q) +  ": iso = " + str(our_iso)
-            dba = Database_iso(p, k, l, OpCount.field_op[str(k)], str_iso_, A, "tmp.db")
+            dba = Database_iso(p, k, l, OpCount.field_op[str(k)], str_iso_, A, db_name)
             dba.insert()
             OpCount.clean()
             print("A, p, l, k, Q, iso: {} {} {} {} {} {}".format(A, p, l, k, Q, our_iso))

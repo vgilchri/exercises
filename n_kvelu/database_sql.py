@@ -25,6 +25,8 @@ class Database_iso():
                                         id_prime	INTEGER NOT NULL,
                                     	prime	INTEGER NOT NULL,
                                     	k	INTEGER NOT NULL,
+                                        A   INTEGER NOT NULL,
+                                        l   INTEGER NOT NULL,
                                     	PRIMARY KEY(id_prime AUTOINCREMENT)
                                     ); """
             c.execute(table_1)
@@ -33,7 +35,7 @@ class Database_iso():
 
         try:
             c = conn.cursor()
-            table_2 = """ CREATE TABLE IF NOT EXISTS costs (
+            table_2 = """ CREATE TABLE IF NOT EXISTS costs_our (
                                         id_costs	INTEGER NOT NULL,
                                     	id_prime	INTEGER NOT NULL,
                                     	frob	INTEGER,
@@ -67,12 +69,48 @@ class Database_iso():
 
 
 
+        try:
+            c = conn.cursor()
+            table_2 = """ CREATE TABLE IF NOT EXISTS costs_ch (
+                                        id_costs	INTEGER NOT NULL,
+                                    	id_prime	INTEGER NOT NULL,
+                                    	frob	INTEGER,
+                                    	xADD	INTEGER,
+                                    	xDBL	INTEGER,
+                                    	nr_mult	INTEGER,
+                                    	nr_add	INTEGER,
+                                    	nr_div	INTEGER,
+                                    	nr_square	INTEGER,
+                                    	l	INTEGER NOT NULL,
+                                    	PRIMARY KEY(id_costs AUTOINCREMENT),
+                                    	FOREIGN KEY(id_prime) REFERENCES prime_extension(id_prime)
+                                    ); """
+            c.execute(table_2)
+        except Error as e:
+            print(e)
+
+        try:
+            c = conn.cursor()
+            table_3 = """ CREATE TABLE IF NOT EXISTS isogeny_eval_ch (
+                                        id_iso	INTEGER NOT NULL,
+                                    	iso	BLOB,
+                                    	id_costs	INTEGER NOT NULL,
+                                    	A	INTEGER NOT NULL,
+                                    	PRIMARY KEY(id_iso AUTOINCREMENT),
+                                    	FOREIGN KEY(id_costs) REFERENCES costs_ch(id_costs)
+                                    ); """
+            c.execute(table_3)
+        except Error as e:
+            print(e)
 
 
-    def insert(self):
+
+
+
+    def insert_our(self):
         print("starting insert...")
         c = self.conn.cursor()
-        c.execute('INSERT INTO prime_extension (prime, k) VALUES (?, ?)', (self.p, self.k))
+        c.execute('INSERT INTO prime_extension (prime, k, A, l) VALUES (?, ?, ?, ?)', (self.p, self.k, self.A, self.l))
         prime_id = c.lastrowid
         self.conn.commit()
 
@@ -104,6 +142,52 @@ class Database_iso():
 
         print(self.costs)
         c = self.conn.cursor()
-        c.execute('INSERT INTO costs (id_prime, frob, xADD, xDBL, nr_mult, nr_add,  nr_div, nr_square, l) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', (prime_id, frob, xADD, xDBL, mult, add,  div, square, self.l))
+        c.execute('INSERT INTO costs_our (id_prime, frob, xADD, xDBL, nr_mult, nr_add,  nr_div, nr_square, l) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', (prime_id, frob, xADD, xDBL, mult, add,  div, square, self.l))
         c.execute('INSERT INTO isogeny_eval (iso, id_costs, A) VALUES (?, ?, ?)', (self.iso, c.lastrowid, self.A))
+        self.conn.commit()
+
+    def insert_ch(self):
+        print("starting insert...")
+        prime_id = 0
+        c = self.conn.cursor()
+        res = c.execute('SELECT id_prime FROM prime_extension WHERE prime = ? AND k = ? AND A = ? AND l = ?', (self.p, self.k, self.A, self.l))
+        tmp = res.fetchall()
+        if tmp == None:
+            c.execute('INSERT INTO prime_extension (prime, k, A, l) VALUES (?, ?,?, ?)', (self.p, self.k, self.A, self.l))
+            prime_id = c.lastrowid
+            self.conn.commit()
+        else:
+            prime_id = tmp[0]
+
+
+
+        self.__insert__costs__and__iso__ch__(prime_id)
+
+    def __insert__costs__and__iso__ch__(self, prime_id):
+        frob = 0;
+        xADD = 0;
+        xDBL = 0
+        mult = 0
+        add = 0
+        div = 0
+        square = 0
+        if "frob" in self.costs:
+            frob = self.costs["frob"]
+        if "xADD" in self.costs:
+            xADD = self.costs["xADD"]
+        if "xDBL" in self.costs:
+            xDBL = self.costs["xDBL"]
+        if "mult" in self.costs:
+            mult = self.costs["mult"]
+        if "div" in self.costs:
+            div = self.costs["div"]
+        if "square" in self.costs:
+            square = self.costs["square"]
+        if "add" in self.costs:
+            add = self.costs["add"]
+
+        print(self.costs)
+        c = self.conn.cursor()
+        c.execute('INSERT INTO costs_ch(id_prime, frob, xADD, xDBL, nr_mult, nr_add,  nr_div, nr_square, l) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', (prime_id, frob, xADD, xDBL, mult, add,  div, square, self.l))
+        c.execute('INSERT INTO isogeny_eval_ch (iso, id_costs, A) VALUES (?, ?, ?)', (self.iso, c.lastrowid, self.A))
         self.conn.commit()
