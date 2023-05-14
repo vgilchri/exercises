@@ -42,3 +42,32 @@ procedure print_data(ell)
     end for;
 end procedure;
 
+procedure print_percents()
+    bad_l := 0;
+    total_l := 0;
+    for k in [1..11] do
+    for i in [3..1000] do 
+        if IsPrime(i) then
+            if (i-1) mod k eq 0 then
+                if not(LemmaCheck(i,k)) then
+                    //i;
+                    total_l := total_l + 1;
+                    X := minimal_coset_reps(i,k);
+                    for i in [3..#X] do 
+                        n := X[i] - X[i-1];
+                        if not(n in X) then
+                            //false;
+                            bad_l := bad_l + 1;
+                        end if;
+                    end for;
+                end if;
+            end if;
+        end if;
+    end for;
+    "---------------------";
+    "k is ";
+    k;
+    "percent of bad l:";
+    Floor(bad_l / total_l * 100);
+    end for;
+end procedure;
