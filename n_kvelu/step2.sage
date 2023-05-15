@@ -355,7 +355,6 @@ def evaluate_from_G(p,k,G,A,l,P): # Returns the evaluation at P of the Kernel po
     		S_0=get_S0_false(G,A,l,k_prime,K_even,E)
     	else :
     		S_0=get_S0_false(G,A,l,k_prime,K,E)
-    print("S_O:",S_0)
     res=Px-S_0[0]
     if COUNT_ALL:
         OpCount.op("add", str(k))
@@ -368,16 +367,10 @@ def evaluate_from_G(p,k,G,A,l,P): # Returns the evaluation at P of the Kernel po
     for i in range (1,k) : # Frobenius powering
         power=power + pow(p,i)
         if COUNT_ALL:
-            OpCount.op("add", str(k))
-        if COUNT_ALL:
-            for m in range (abs(int(log(i,2)))):
-                OpCount.op("square", str(k))
+            OpCount.op("frob", str(k))
 
     res=pow(res,power)
-
-    if COUNT_ALL:
-        for m in range (abs(int(log(power,2)))):
-            OpCount.op("square", str(k))
+    OpCount.op("frob", str(k))
     res= K(res)
     #print("so we have same ?",(P[0]-S_0[0])**(p**(k-1)),P[0]-S_0[0]**(p**(k-1)))
     return(res)
@@ -388,7 +381,6 @@ def evaluate_from_G(p,k,G,A,l,P): # Returns the evaluation at P of the Kernel po
 #****************************************************************************************
 
 def compute_rationals_bis(E, T, l, kX, K, k, A): # Compute the rationnals function for getting isogeny from E with kernel points T
-
     a1,a2,a3, a4, a6= 0, A, 0, 1, 0 #coefficients
     S = range(1,(l+1)/2)
     if l > 1:

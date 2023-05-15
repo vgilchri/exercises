@@ -6,6 +6,7 @@ from ctool import OpCount
 
 def xADD_ch(P,Q,R):
 	# montgomery xADD
+	OpCount.op("xADD", str(k))
 	xP,zP = P
 	xQ,zQ = Q
 	xR,zR = R
@@ -42,6 +43,7 @@ def xDBL_ch(P,A):
 	t = xP*zP # T/4 from s.s. paper
 	r1 = R*S
 	r2 = 4*t*(S+(A+2)*t)
+	OpCount.op("xDBL", str(k))
 	OpCount.op("mult", str(k))
 	OpCount.op("mult", str(k))
 	OpCount.op("mult", str(k))

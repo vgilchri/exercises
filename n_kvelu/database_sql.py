@@ -152,14 +152,14 @@ class Database_iso():
         c = self.conn.cursor()
         res = c.execute('SELECT id_prime FROM prime_extension WHERE prime = ? AND k = ? AND A = ? AND l = ?', (self.p, self.k, self.A, self.l))
         tmp = res.fetchall()
-
+        print("tmp query {}".format(tmp))
         if tmp == None:
             c.execute('INSERT INTO prime_extension (prime, k, A, l) VALUES (?, ?,?, ?)', (self.p, self.k, self.A, self.l))
             prime_id = c.lastrowid
             self.conn.commit()
         else:
             prime_id = tmp[0][0]
-        print("res query {}".format(prime_id))
+
 
 
 
