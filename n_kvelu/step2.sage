@@ -18,8 +18,10 @@ from ctool import OpCount
 def valuation_2(n) :
   res=0
   while (n%2)==0 :
+    OpCount.op("add", str(k))
     res+=1
     n=n/2
+    OpCount.op("div", str(k))
   return (res)
 
 #####################################
