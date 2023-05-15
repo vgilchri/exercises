@@ -1,0 +1,6 @@
+SELECT DISTINCT prime_extension.id_prime, prime_extension.prime, prime_extension.k, prime_extension.A,
+prime_extension.l, costs_our.frob, costs_our.xADD,
+costs_our.xDBL, costs_our.nr_add, costs_our.nr_mult, costs_our.nr_square,
+costs_our.nr_div FROM prime_extension, costs_our
+WHERE prime_extension.prime = 71 AND prime_extension.k = 1 AND prime_extension.l = 5
+AND prime_extension.id_prime = costs_our.id_prime;

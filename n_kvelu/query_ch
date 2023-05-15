@@ -1,0 +1,6 @@
+SELECT DISTINCT prime_extension.id_prime, prime_extension.prime, prime_extension.k, prime_extension.A,
+prime_extension.l, AVG(costs_ch.frob), AVG(costs_ch.xADD),
+AVG(costs_ch.xDBL), AVG(costs_ch.nr_add), AVG(costs_ch.nr_mult), AVG(costs_ch.nr_square),
+AVG(costs_ch.nr_div) FROM prime_extension, costs_ch
+WHERE prime_extension.prime = 101 AND prime_extension.k = 5 AND prime_extension.l = 11
+AND prime_extension.id_prime = costs_ch.id_prime;
