@@ -19,14 +19,19 @@ def point_finding(A,p,l,k):
     # sample a random point
     E = EllipticCurve(K, [0, A, 0, 1, 0])
     P_l =E.random_point()
+    OpCount.op("rand", str(k))
     N = E.order()
     if N % l**2 == 0:
         t = N // l**2
+        OpCount.op("div", str(k))
     else:
         t = N//l
+        OpCount.op("div", str(k))
 
     while P_l.order() != l:
         P = E.random_point()
+        OpCount.op("rand", str(k))
+        OpCount.op("mult", str(k))
         P_l = t*P
     return P_l
 
@@ -85,6 +90,7 @@ def get_h_k(A,p,k) :
         N1 = E1.order()
 
         N= Nk//N1
+        OpCount.op("div", str(k))
 
     elif k==4 :
 
@@ -95,6 +101,7 @@ def get_h_k(A,p,k) :
         N2 = E2.order()
 
         N= Nk//N2
+        OpCount.op("div", str(k))
 
     elif k==6 :
 
@@ -117,6 +124,9 @@ def get_h_k(A,p,k) :
         N3 = E3.order()
 
         N= (Nk*N1)//(N2*N3)
+        OpCount.op("div", str(k))
+        OpCount.op("mult", str(k))
+        OpCount.op("mult", str(k))
 
     elif k==8 :
 
@@ -127,6 +137,7 @@ def get_h_k(A,p,k) :
         N4 = E4.order()
 
         N= Nk//N4
+        OpCount.op("div", str(k))
 
     elif k==9 :
 
@@ -137,6 +148,7 @@ def get_h_k(A,p,k) :
         N3 = E3.order()
 
         N= Nk//N3
+        OpCount.op("div", str(k))
 
     elif k==10 :
 
@@ -159,6 +171,9 @@ def get_h_k(A,p,k) :
         N5 = E5.order()
 
         N= (Nk*N1)//(N2*N5)
+        OpCount.op("div", str(k))
+        OpCount.op("mult", str(k))
+        OpCount.op("mult", str(k))
 
     elif k==12 :
 
@@ -181,6 +196,9 @@ def get_h_k(A,p,k) :
         N6 = E6.order()
 
         N= (Nk*N2)//(N4*N6)
+        OpCount.op("div", str(k))
+        OpCount.op("mult", str(k))
+        OpCount.op("mult", str(k))
 
     return N
 
@@ -211,12 +229,15 @@ def optimized_point_finding(A,p,k,l, K):
     N = get_h_k(A,p,k)
     if N % l**2 == 0:
         t = N // l**2
+        OpCount.op("div", str(k))
     else:
         t = N//l
+        OpCount.op("div", str(k))
 
 
     while P_l.order() != l:
         P = E.random_point()
+        OpCount.op("rand", str(k))
         P = delta(P,E,k,p)
         P_l = t*P
         OpCount.op("mult", str(k))

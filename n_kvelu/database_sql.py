@@ -45,6 +45,7 @@ class Database_iso():
                                     	nr_add	INTEGER,
                                     	nr_div	INTEGER,
                                     	nr_square	INTEGER,
+                                        nr_random	INTEGER,
                                     	l	INTEGER NOT NULL,
                                     	PRIMARY KEY(id_costs AUTOINCREMENT),
                                     	FOREIGN KEY(id_prime) REFERENCES prime_extension(id_prime)
@@ -81,6 +82,7 @@ class Database_iso():
                                     	nr_add	INTEGER,
                                     	nr_div	INTEGER,
                                     	nr_square	INTEGER,
+                                        nr_random	INTEGER,
                                     	l	INTEGER NOT NULL,
                                     	PRIMARY KEY(id_costs AUTOINCREMENT),
                                     	FOREIGN KEY(id_prime) REFERENCES prime_extension(id_prime)
@@ -125,6 +127,7 @@ class Database_iso():
         add = 0
         div = 0
         square = 0
+        rand = 0
         if "frob" in self.costs:
             frob = self.costs["frob"]
         if "xADD" in self.costs:
@@ -139,10 +142,12 @@ class Database_iso():
             square = self.costs["square"]
         if "add" in self.costs:
             add = self.costs["add"]
+        if "rand" in self.costs:
+            rand = self.costs["rand"]
 
         print(self.costs)
         c = self.conn.cursor()
-        c.execute('INSERT INTO costs_our (id_prime, frob, xADD, xDBL, nr_mult, nr_add,  nr_div, nr_square, l) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', (prime_id, frob, xADD, xDBL, mult, add,  div, square, self.l))
+        c.execute('INSERT INTO costs_our (id_prime, frob, xADD, xDBL, nr_mult, nr_add,  nr_div, nr_square, nr_random,  l) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)', (prime_id, frob, xADD, xDBL, mult, add,  div, square, rand, self.l))
         c.execute('INSERT INTO isogeny_eval (iso, id_costs, A) VALUES (?, ?, ?)', (self.iso, c.lastrowid, self.A))
         self.conn.commit()
 
@@ -173,6 +178,7 @@ class Database_iso():
         add = 0
         div = 0
         square = 0
+        rand = 0
         if "frob" in self.costs:
             frob = self.costs["frob"]
         if "xADD" in self.costs:
@@ -187,9 +193,11 @@ class Database_iso():
             square = self.costs["square"]
         if "add" in self.costs:
             add = self.costs["add"]
+        if "rand" in self.costs:
+            rand = self.costs["rand"]
 
         print(self.costs)
         c = self.conn.cursor()
-        c.execute('INSERT INTO costs_ch(id_prime, frob, xADD, xDBL, nr_mult, nr_add,  nr_div, nr_square, l) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', (prime_id, frob, xADD, xDBL, mult, add,  div, square, self.l))
+        c.execute('INSERT INTO costs_ch(id_prime, frob, xADD, xDBL, nr_mult, nr_add,  nr_div, nr_square, nr_random, l) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (prime_id, frob, xADD, xDBL, mult, add,  div, square, rand, self.l))
         c.execute('INSERT INTO isogeny_eval_ch (iso, id_costs, A) VALUES (?, ?, ?)', (self.iso, c.lastrowid, self.A))
         self.conn.commit()
