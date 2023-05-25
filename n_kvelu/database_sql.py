@@ -23,10 +23,10 @@ class Database_iso():
             c = conn.cursor()
             table_1 = """ CREATE TABLE IF NOT EXISTS prime_extension (
                                         id_prime	INTEGER NOT NULL,
-                                    	prime	INTEGER NOT NULL,
-                                    	k	INTEGER NOT NULL,
-                                        A   INTEGER NOT NULL,
-                                        l   INTEGER NOT NULL,
+                                    	prime	BIGINT NOT NULL,
+                                    	k	BIGINT NOT NULL,
+                                        A   BIGINT NOT NULL,
+                                        l   BIGINT NOT NULL,
                                     	PRIMARY KEY(id_prime AUTOINCREMENT)
                                     ); """
             c.execute(table_1)
@@ -38,15 +38,14 @@ class Database_iso():
             table_2 = """ CREATE TABLE IF NOT EXISTS costs_our (
                                         id_costs	INTEGER NOT NULL,
                                     	id_prime	INTEGER NOT NULL,
-                                    	frob	INTEGER,
-                                    	xADD	INTEGER,
-                                    	xDBL	INTEGER,
-                                    	nr_mult	INTEGER,
-                                    	nr_add	INTEGER,
-                                    	nr_div	INTEGER,
-                                    	nr_square	INTEGER,
-                                        nr_random	INTEGER,
-                                    	l	INTEGER NOT NULL,
+                                    	frob	BIGINT,
+                                    	xADD	BIGINT,
+                                    	xDBL	BIGINT,
+                                    	nr_mult	BIGINT,
+                                    	nr_add	BIGINT,
+                                    	nr_div	BIGINT,
+                                    	nr_square	BIGINT,
+                                    	l	BIGINT NOT NULL,
                                     	PRIMARY KEY(id_costs AUTOINCREMENT),
                                     	FOREIGN KEY(id_prime) REFERENCES prime_extension(id_prime)
                                     ); """
@@ -60,7 +59,7 @@ class Database_iso():
                                         id_iso	INTEGER NOT NULL,
                                     	iso	BLOB,
                                     	id_costs	INTEGER NOT NULL,
-                                    	A	INTEGER NOT NULL,
+                                    	A	BIGINT NOT NULL,
                                     	PRIMARY KEY(id_iso AUTOINCREMENT),
                                     	FOREIGN KEY(id_costs) REFERENCES costs(id_costs)
                                     ); """
@@ -75,15 +74,14 @@ class Database_iso():
             table_2 = """ CREATE TABLE IF NOT EXISTS costs_ch (
                                         id_costs	INTEGER NOT NULL,
                                     	id_prime	INTEGER NOT NULL,
-                                    	frob	INTEGER,
-                                    	xADD	INTEGER,
-                                    	xDBL	INTEGER,
-                                    	nr_mult	INTEGER,
-                                    	nr_add	INTEGER,
-                                    	nr_div	INTEGER,
-                                    	nr_square	INTEGER,
-                                        nr_random	INTEGER,
-                                    	l	INTEGER NOT NULL,
+                                    	frob	BIGINT,
+                                    	xADD	BIGINT,
+                                    	xDBL	BIGINT,
+                                    	nr_mult	BIGINT,
+                                    	nr_add	BIGINT,
+                                    	nr_div	BIGINT,
+                                    	nr_square	BIGINT,
+                                    	l	BIGINT NOT NULL,
                                     	PRIMARY KEY(id_costs AUTOINCREMENT),
                                     	FOREIGN KEY(id_prime) REFERENCES prime_extension(id_prime)
                                     ); """
@@ -97,7 +95,7 @@ class Database_iso():
                                         id_iso	INTEGER NOT NULL,
                                     	iso	BLOB,
                                     	id_costs	INTEGER NOT NULL,
-                                    	A	INTEGER NOT NULL,
+                                    	A	BIGINT NOT NULL,
                                     	PRIMARY KEY(id_iso AUTOINCREMENT),
                                     	FOREIGN KEY(id_costs) REFERENCES costs_ch(id_costs)
                                     ); """

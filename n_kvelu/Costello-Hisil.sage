@@ -31,7 +31,7 @@ def xADD_ch(P,Q,R):
 		res2 = 0
 	else:
 		res1 = res1/res2
-		OpCount.op("div", str(k))
+		OpCount.op("inv", str(k))
 		res2 = 1
 	return [res1, res2]
 
@@ -59,7 +59,7 @@ def xDBL_ch(P,A):
 		r1 = 1
 		r2 = 0
 	else:
-		OpCount.op("div", str(k))
+		OpCount.op("inv", str(k))
 		r1 = r1/r2
 		r2 = 1
 	return [r1, r2]
@@ -117,7 +117,7 @@ def odd_iso(kernel,Q):
 		res1 = 1
 		res2 = 0
 	else:
-		OpCount.op("div", str(k))
+		OpCount.op("inv", str(k))
 		res1 = res1/res2
 		res2 = 1
 	return [res1,res2]
