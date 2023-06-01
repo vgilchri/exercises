@@ -1,13 +1,15 @@
 clear;
 
-val2 := function(n)
-    res := 0;
-    while (n mod 2 eq 0) do 
-        res := res + 1;
-        n := Floor(n/2);
-    end while;
-    return res;
-end function;
+#Valuation function : (Anaëlle : It seems a function exists for this in Magma its is Valuation(n,p)
+
+#val2 := function(n)
+#    res := 0;
+#    while (n mod 2 eq 0) do 
+#        res := res + 1;
+#        n := Floor(n/2);
+#    end while;
+#    return res;
+#end function;
 
 LemmaCheck := function(l,k)
     elt := GF(l)!2;
@@ -24,7 +26,7 @@ LemmaCheck := function(l,k)
         return true;
     end if;
     if k2 eq (l-1)/2 then 
-        if (l mod 4 eq 3) or (val2(k3) eq val2(k2prime)+1) then
+        if (l mod 4 eq 3) or (Valuation(k3,2) eq Valuation(k2prime,2)+1) then
             return true;
         end if;
     end if;
