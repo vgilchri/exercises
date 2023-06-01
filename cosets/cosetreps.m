@@ -1,15 +1,15 @@
 clear;
 
-#Valuation function : (Anaëlle : It seems a function exists for this in Magma its is Valuation(n,p)
+%Valuation function : (Anaëlle : It seems a function exists for this in Magma its is Valuation(n,p)
 
-#val2 := function(n)
-#    res := 0;
-#    while (n mod 2 eq 0) do 
-#        res := res + 1;
-#        n := Floor(n/2);
-#    end while;
-#    return res;
-#end function;
+%val2 := function(n)
+%    res := 0;
+%    while (n mod 2 eq 0) do 
+%        res := res + 1;
+%        n := Floor(n/2);
+%    end while;
+%    return res;
+%end function;
 
 LemmaCheck := function(l,k)
     elt := GF(l)!2;
