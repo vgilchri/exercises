@@ -25,7 +25,7 @@ for line in open(filename, 'r'):
     A = int(line[1])
     p = int(line[2])
     l = int(line[3].replace("]", ""))
-    db_name = "new_db.db"
+    db_name = "new_db2.db"
     Database_iso.create_database(db_name)
 
     if k%2 != 0 and k < 12 and l > 2:
